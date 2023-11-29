@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    public Vector3 rotationAxis = Vector3.up; // Define the axis (up, right, forward, etc.)
-    public float rotationSpeed = 180f; // Speed of rotation
-    public float life = 1.5f;
-    public bool rotateRight = true;
-    public float ySpread = 0;
-    void Awake()
-    {
-        Destroy(gameObject, life);
-    }
-
+    Vector3 rotationAxis = Vector3.up; // Define the axis (up, right, forward, etc.)
+    float rotationSpeed;// = 180f; // Speed of rotation
+    float life = 1.5f;
+    bool rotateRight;// = true;
+    float ySpread;// = 0f;
+ 
     void Update()
     {
         transform.RotateAround(Vector3.zero, rotationAxis, (rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime);
-        transform.Translate(Vector3.up * ySpread * Time.deltaTime);
+        transform.Translate(Vector3.back * ySpread * Time.deltaTime);
     }
 
     public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float ySpreadValue, float lifeValue)
@@ -25,7 +21,9 @@ public class BulletBehaviour : MonoBehaviour
         rotationSpeed = rotationSpeedValue;
         rotateRight = rotateRightValue;
         life = lifeValue;
-        ySpread = ySpreadValue;
+        ySpread = (rotateRight ? 1 : -1) * ySpreadValue;
+        Destroy(gameObject, life);
+        Debug.Log("Bullet Created with values: ySpread: " + ySpread + "speed: " + rotationSpeed + "life: " + life);
     }
 
 }
