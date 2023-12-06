@@ -1,44 +1,56 @@
+using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody Physics;
-    public float Speed = 1.0f;
-    public float JumpForce = 1.0f;
+    private Rigidbody physics;
+    public float range = 3;
+    public float JumpForce = 6.0f;
+    public bool collisionEnv = false;
 
     //public Transform cylinderCenter; // Centro del cilindro
     public float cylinderRadius = 10f; // Radio del cilindro
+    Animator anim;
+    GameObject playerObject = null; 
 
     void Start()
     {
-        Physics = GetComponent<Rigidbody>();
+        physics = GetComponent<Rigidbody>();
+        playerObject = GameObject.Find("T-Pose");
+        anim = playerObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
-    {
-        //float h = Input.GetAxis("Horizontal");
-        //float v = Input.GetAxis("Vertical");
+    {   
 
-        // Obtener posición relativa del jugador con respecto al cilindro
-        //Vector3 relativePosition = transform.position - cylinderCenter.position;
+        Vector3 direction = Vector3.forward;
+        Ray theRay = new Ray(transform.position, transform.TransformDirection(direction*range));
+        Debug.DrawRay(transform.position, transform.TransformDirection(direction*range));
 
-        // Convertir a coordenadas cilíndricas
-        //float theta = Mathf.Atan2(relativePosition.z, relativePosition.x);
-        //float radius = relativePosition.magnitude;
-
-        // Actualizar el ángulo y el radio
-        //theta += h * Time.deltaTime * Speed;
-        //radius = Mathf.Clamp(radius + v * Time.deltaTime * Speed, 0f, cylinderRadius);
-
-        // Actualizar la posición del jugador en coordenadas cartesianas
-        //Vector3 newPosition = new Vector3(radius * Mathf.Cos(theta), relativePosition.y, radius * Mathf.Sin(theta)) + cylinderCenter.position;
-
-        // Establecer la nueva posición del jugador
-        //transform.position = newPosition;
-        //Physics.MovePosition(newPosition);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Physics.AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
+        if(Physics.Raycast(theRay, out RaycastHit hit, range)){
+            if(hit.collider.tag == "env") collisionEnv = true;
+            else collisionEnv = false;
         }
+        else collisionEnv = false;
+         //print(collisionEnv);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {   
+            anim.SetFloat("Blend", 1.0f);
+            physics.AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
+            
+        }
+        print(IsGrounded());
+    }
+
+
+    bool IsGrounded()
+    {
+        return GetComponent<Rigidbody>().velocity.y == 0;
+    }
+
+    public bool GetCollisionEnv() {
+        return collisionEnv;
     }
 }
