@@ -41,4 +41,16 @@ public class PlayerMovement : MonoBehaviour
             Physics.AddForce(new Vector3(0, JumpForce, 0), ForceMode.Impulse);
         }
     }
+
+    public void stopFall()
+    {
+        if (Physics.velocity.y < 0)
+        {
+            Vector3 velocity = Physics.velocity;
+            velocity.y = 0;
+            Physics.velocity = velocity;
+        }
+    }
+
+
 }
