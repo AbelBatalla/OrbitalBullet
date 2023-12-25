@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
+    public GameObject bulletCollision;
+
     Vector3 rotationAxis = Vector3.up; // Define the axis (up, right, forward, etc.)
     float rotationSpeed;// = 180f; // Speed of rotation
     float life = 1.5f;
@@ -20,6 +22,12 @@ public class BulletBehaviour : MonoBehaviour
             transform.RotateAround(Vector3.zero, rotationAxis, (rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime);
             transform.Translate(Vector3.back * ySpread * Time.deltaTime);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Instantiate(bulletCollision, collision.contacts[0].point, Quaternion.Euler(0, 180, 0));
+        StopRender();
     }
 
     public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float ySpreadValue, float lifeValue)

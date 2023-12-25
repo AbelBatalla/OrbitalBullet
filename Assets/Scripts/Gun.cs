@@ -7,7 +7,6 @@ public class Gun : MonoBehaviour
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
 
-    //public float bulletSpeed = 10;
     public float timeBetweenShooting, timeBetweenShots;
     public float spread = 3f;
     public float bulletLife = 10f;
@@ -22,8 +21,10 @@ public class Gun : MonoBehaviour
     public float recoilSpeed = 90f;
     public GameObject player;
     PlayerMovement PlayerMovement;
+
     private AudioSource audioSource;
     public AudioClip soundClip;
+    public GameObject muzzleFlash;
 
     int bulletsLeft, bulletsShot;
 
@@ -67,11 +68,6 @@ public class Gun : MonoBehaviour
     private void Shoot()
     {
         readyToShoot = false;
-        if (audioSource != null && soundClip != null)
-        {
-            audioSource.PlayOneShot(soundClip);
-            Debug.Log("BOOM!");
-        }
         bulletsLeft--;
         bulletsShot++;
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
@@ -87,6 +83,15 @@ public class Gun : MonoBehaviour
         {
             Invoke("ResetShot", timeBetweenShooting);
             allowInvoke = false;
+            if (audioSource != null && soundClip != null)
+            {
+                audioSource.PlayOneShot(soundClip);
+                Debug.Log("BOOM!");
+            }
+            if (muzzleFlash != null)
+            {
+                Instantiate(muzzleFlash, bulletSpawnPoint.position, Quaternion.identity);
+            }
             MapMovement.giveRecoil(recoilLength, recoilSpeed, shootRight);
             PlayerMovement.stopFall();
         }
