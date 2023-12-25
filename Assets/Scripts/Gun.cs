@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
     public float timeBetweenShooting, timeBetweenShots;
     public float spread = 3f;
     public float bulletLife = 10f;
+    public float bulletSpeed = 180f;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     public bool allowInvoke = true;
@@ -21,6 +22,8 @@ public class Gun : MonoBehaviour
     public float recoilSpeed = 90f;
     public GameObject player;
     PlayerMovement PlayerMovement;
+    private AudioSource audioSource;
+    public AudioClip soundClip;
 
     int bulletsLeft, bulletsShot;
 
@@ -31,6 +34,7 @@ public class Gun : MonoBehaviour
     {
         MapMovement = mapMov.GetComponent<MapMovement>();
         PlayerMovement = player.GetComponent<PlayerMovement>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Awake()
@@ -63,7 +67,11 @@ public class Gun : MonoBehaviour
     private void Shoot()
     {
         readyToShoot = false;
-
+        if (audioSource != null && soundClip != null)
+        {
+            audioSource.PlayOneShot(soundClip);
+            Debug.Log("BOOM!");
+        }
         bulletsLeft--;
         bulletsShot++;
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
@@ -72,7 +80,7 @@ public class Gun : MonoBehaviour
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
         if (BulletBehaviour != null)
         {
-            BulletBehaviour.InitializeBullet(180f, shootRight, ySpread, bulletLife);
+            BulletBehaviour.InitializeBullet(bulletSpeed, shootRight, ySpread, bulletLife);
         }
 
         if (allowInvoke)
