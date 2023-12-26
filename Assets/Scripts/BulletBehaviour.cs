@@ -20,7 +20,7 @@ public class BulletBehaviour : MonoBehaviour
         if (!stop)
         {
             transform.RotateAround(Vector3.zero, rotationAxis, (rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime);
-            transform.Translate(Vector3.back * ySpread * Time.deltaTime);
+            transform.Translate(Vector3.up * ySpread * Time.deltaTime);
         }
     }
 
