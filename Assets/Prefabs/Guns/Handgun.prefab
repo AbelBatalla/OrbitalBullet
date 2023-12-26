@@ -217,7 +217,6 @@ MonoBehaviour:
   bulletsPerTap: 1
   allowButtonHold: 0
   allowInvoke: 1
-  mapMov: {fileID: 0}
   recoilLength: 5
   recoilSpeed: 90
   player: {fileID: 0}
