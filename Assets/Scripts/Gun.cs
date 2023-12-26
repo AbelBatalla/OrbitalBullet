@@ -16,12 +16,10 @@ public class Gun : MonoBehaviour
     public bool allowInvoke = true;
 
     public GameObject mapMov;
-    MapMovement MapMovement;
     MovePlayer MovePlayer;
     public float recoilLength = 5f;
     public float recoilSpeed = 90f;
     public GameObject player;
-    PlayerMovement PlayerMovement;
 
     private AudioSource audioSource;
     public AudioClip soundClip;
@@ -34,9 +32,7 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        MapMovement = mapMov.GetComponent<MapMovement>();
         MovePlayer = player.GetComponent<MovePlayer>();
-        PlayerMovement = player.GetComponent<PlayerMovement>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -72,7 +68,7 @@ public class Gun : MonoBehaviour
         readyToShoot = false;
         bulletsLeft--;
         bulletsShot++;
-        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         if (!shootRight) bullet.transform.Rotate(Vector3.right, 180);
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
@@ -92,13 +88,16 @@ public class Gun : MonoBehaviour
             }
             if (muzzleFlash != null)
             {
-                Instantiate(muzzleFlash, bulletSpawnPoint.position, Quaternion.identity);
+                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, 0f, 90f));
             }
             MovePlayer.giveRecoil(recoilLength, recoilSpeed);
-            PlayerMovement.stopFall();
         }
 
-        if (bulletsShot < bulletsPerTap && bulletsLeft > 0) Invoke("Shoot", timeBetweenShots);
+        if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
+        {
+            Invoke("Shoot", timeBetweenShots);
+            Debug.Log("Invoke");
+        }
     }
 
     private void ResetShot()
