@@ -15,7 +15,6 @@ public class Gun : MonoBehaviour
     public bool allowButtonHold;
     public bool allowInvoke = true;
 
-    public GameObject mapMov;
     MovePlayer MovePlayer;
     public float recoilLength = 5f;
     public float recoilSpeed = 90f;
@@ -68,7 +67,7 @@ public class Gun : MonoBehaviour
         readyToShoot = false;
         bulletsLeft--;
         bulletsShot++;
-        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.Euler(90f, bulletSpawnPoint.eulerAngles.y, 0f));
         if (!shootRight) bullet.transform.Rotate(Vector3.right, 180);
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
@@ -84,7 +83,6 @@ public class Gun : MonoBehaviour
             if (audioSource != null && soundClip != null)
             {
                 audioSource.PlayOneShot(soundClip);
-                Debug.Log("BOOM!");
             }
             if (muzzleFlash != null)
             {
@@ -96,7 +94,6 @@ public class Gun : MonoBehaviour
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
         {
             Invoke("Shoot", timeBetweenShots);
-            Debug.Log("Invoke");
         }
     }
 
