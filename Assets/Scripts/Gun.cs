@@ -17,6 +17,7 @@ public class Gun : MonoBehaviour
 
     public GameObject mapMov;
     MapMovement MapMovement;
+    MovePlayer MovePlayer;
     public float recoilLength = 5f;
     public float recoilSpeed = 90f;
     public GameObject player;
@@ -34,6 +35,7 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         MapMovement = mapMov.GetComponent<MapMovement>();
+        MovePlayer = player.GetComponent<MovePlayer>();
         PlayerMovement = player.GetComponent<PlayerMovement>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -92,7 +94,7 @@ public class Gun : MonoBehaviour
             {
                 Instantiate(muzzleFlash, bulletSpawnPoint.position, Quaternion.identity);
             }
-            MapMovement.giveRecoil(recoilLength, recoilSpeed, shootRight);
+            MovePlayer.giveRecoil(recoilLength, recoilSpeed);
             PlayerMovement.stopFall();
         }
 
