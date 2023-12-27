@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MovePlayer : MonoBehaviour
     GameObject playerObject = null; 
     Vector3 lastPosition = new Vector3(0,0,0);
     bool recoil = false;
+    float recoilMax, recoilAccum, recoilSpeed;
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,38 +40,38 @@ public class MovePlayer : MonoBehaviour
         bool controlJump = false;
 
         // Left-right movement
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && !recoil)
         {
             float angle;
             startDirection.x = -95.0f;
             Vector3 direction, target;
-            anim.SetFloat("Blend", 0.5f ,0.1f, Time.deltaTime);
+            anim.SetFloat("Blend", 0.5f, 0.1f, Time.deltaTime);
             position = transform.position;
 
             Debug.Log(position - lastPosition);
 
             lastPosition = transform.position;
             angle = rotationSpeed * Time.deltaTime;
-            if(recoil) position = lastPosition*2;
+            if (recoil) position = lastPosition * 2;
             direction = position - transform.parent.position;
-            
+
             if (Input.GetKey(KeyCode.A))
             {
                 target = transform.parent.position + Quaternion.AngleAxis(angle, Vector3.up) * direction;
-               
+
                 if (charControl.Move(target - position) != CollisionFlags.None)
-                {   
-                    
+                {
+
                     transform.position = position;
                     Debug.Log(position);
                     Physics.SyncTransforms();
                 }
             }
             if (Input.GetKey(KeyCode.D))
-            {   
+            {
                 startDirection.x = 95.0f;
                 target = transform.parent.position + Quaternion.AngleAxis(-angle, Vector3.up) * direction;
-                
+
                 if (charControl.Move(target - position) != CollisionFlags.None)
                 {
                     Debug.Log(position);
@@ -76,7 +79,12 @@ public class MovePlayer : MonoBehaviour
                     Physics.SyncTransforms();
                 }
             }
-        } else anim.SetFloat("Blend", 0.0f ,0.1f, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);
+            if (recoil) continueRecoil();
+        }
         
 
         // Correct orientation of player
@@ -120,10 +128,50 @@ public class MovePlayer : MonoBehaviour
             speedY -= gravity * Time.deltaTime;
     }
 
+    public void giveRecoil(float recoilMaxValue, float recoilSpeedValue)
+    {
+        recoil = true;
+        recoilMax = recoilMaxValue;
+        recoilSpeed = recoilSpeedValue;
+        recoilAccum = 0f;
+        speedY = 0.0f;
+        //continueRecoil();
+    }
+
+    void continueRecoil()
+    {
+        CharacterController charControl = GetComponent<CharacterController>();
+        Vector3 position, direction, target;
+        float rotationAmount = recoilSpeed * Time.deltaTime;
+        recoilAccum += rotationAmount;
+        if (recoilAccum >= recoilMax)
+        {
+            recoil = false;
+        }
+        position = transform.position;
+        direction = position - transform.parent.position;
+
+        float dir_x = startDirection.x;
+        if (dir_x == -95.0f) target = transform.parent.position + Quaternion.AngleAxis(-rotationAmount, Vector3.up) * direction;
+        else if (dir_x == 95.0f) target = transform.parent.position + Quaternion.AngleAxis(rotationAmount, Vector3.up) * direction;
+        else target = transform.parent.position + Quaternion.AngleAxis(rotationAmount, Vector3.up) * direction;
+
+        if (charControl.Move(target - position) != CollisionFlags.None)
+        {
+
+            Debug.Log(position);
+            transform.position = position;
+            Physics.SyncTransforms();
+
+
+        }
+        anim.SetBool("Shoot", false);
+    }
+
+    /*
     public void giveRecoil(float recoilMaxValue, float recoilSpeedValue){
        
         CharacterController charControl = GetComponent<CharacterController>();
-        speedY = 0.0f;
         Vector3 position, direction, target;
         float angle;
         position = transform.position;
@@ -152,7 +200,7 @@ public class MovePlayer : MonoBehaviour
          anim.SetBool("Shoot", false);
     }
 
-
+    */
   
 
    

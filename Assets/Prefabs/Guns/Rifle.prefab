@@ -333,8 +333,8 @@ MonoBehaviour:
   bulletsPerTap: 1
   allowButtonHold: 1
   allowInvoke: 1
-  recoilLength: 5
-  recoilSpeed: 90
+  recoilLength: 0
+  recoilSpeed: 0
   player: {fileID: 0}
   soundClip: {fileID: 8300000, guid: c54acb21c938ef94cb6e7d78b4f63d5c, type: 3}
   muzzleFlash: {fileID: 1000010254994808, guid: 4c227c816f1a1ff4d95d87db368ffc3f, type: 3}
