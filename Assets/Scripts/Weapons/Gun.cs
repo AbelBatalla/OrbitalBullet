@@ -86,7 +86,7 @@ public class Gun : MonoBehaviour
             }
             if (muzzleFlash != null)
             {
-                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, 0f, 90f));
+                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f));
             }
             MovePlayer.giveRecoil(recoilLength, recoilSpeed);
         }

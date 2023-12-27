@@ -15,10 +15,6 @@ public class healthBar : MonoBehaviour
     void Start()
     {
         oldEase = healthSlider.maxValue = healthSlider.value = easeHealthSlider.maxValue = easeHealthSlider.value = playerHealth.maxHealth;
-        Debug.Log("healthSlider: " + healthSlider.value);
-        Debug.Log("easehealthSlider: " + easeHealthSlider.value);
-        Debug.Log("STARTED");
-
     }
 
     void Update()
@@ -26,7 +22,6 @@ public class healthBar : MonoBehaviour
         if(healthSlider.value != playerHealth.health)
         {
             healthSlider.value = playerHealth.health;
-            Debug.Log("healthSlider UPDATE: " + healthSlider.value);
         }
 
         if(healthSlider.value != easeHealthSlider.value)
@@ -34,8 +29,6 @@ public class healthBar : MonoBehaviour
             easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, playerHealth.health, lerpSpeed);
             if (oldEase == easeHealthSlider.value) easeHealthSlider.value = playerHealth.health;
             oldEase = easeHealthSlider.value;
-            Debug.Log("easeHealthSlider UPDATE: " + easeHealthSlider.value + " to " + playerHealth.health);
-
         }
     }
 }
