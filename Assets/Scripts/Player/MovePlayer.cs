@@ -123,6 +123,7 @@ public class MovePlayer : MonoBehaviour
     public void giveRecoil(float recoilMaxValue, float recoilSpeedValue){
        
         CharacterController charControl = GetComponent<CharacterController>();
+        speedY = 0.0f;
         Vector3 position, direction, target;
         float angle;
         position = transform.position;

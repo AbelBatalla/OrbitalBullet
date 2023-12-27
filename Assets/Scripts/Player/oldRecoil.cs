@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MapMovement : MonoBehaviour
 {
-    public float rotationSpeed = 30f; // Velocidad de rotaciÃ³n del mapa
+    public float rotationSpeed = 30f; // Velocidad de rotación del mapa
     bool recoiling = false;
     public float recoilMax, recoilAccum, recoilSpeed;
     bool recoilDirection;
@@ -23,10 +23,10 @@ public class MapMovement : MonoBehaviour
 
     void RotateMap(float horizontalInput)
     {
-        // Calcular el Ã¡ngulo de rotaciÃ³n basado en la entrada horizontal
+        // Calcular el ángulo de rotación basado en la entrada horizontal
         float rotationAmount = horizontalInput * rotationSpeed * Time.deltaTime;
 
-        // Aplicar la rotaciÃ³n al mapa alrededor del eje vertical (Y)
+        // Aplicar la rotación al mapa alrededor del eje vertical (Y)
         transform.Rotate(Vector3.up, rotationAmount);
     }
 
