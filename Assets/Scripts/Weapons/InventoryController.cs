@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
     public GameObject[] weapons;
+    public WeaponSlot Slot1, Slot2;
     private Vector2Int inventoryWeapons;
     public int currentWeapon = 0;
     public bool slotWeapon = true; //weapon slot 1 or 2 in use
@@ -15,6 +16,9 @@ public class InventoryController : MonoBehaviour
         inventoryWeapons.y = -1;
         currentWeapon = 0;
         slotWeapon = true;
+        Slot1.activeToggle(true);
+        Slot1.EquipWeapon(0);
+        Slot2.activeToggle(false);
         EquipWeapon(0);
     }
 
@@ -23,13 +27,24 @@ public class InventoryController : MonoBehaviour
         //SWAP WEAPON SLOTS
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (!slotWeapon) EquipWeapon(inventoryWeapons.x);
+            if (!slotWeapon)
+            {
+                EquipWeapon(inventoryWeapons.x);
+                Slot1.activeToggle(true);
+                Slot2.activeToggle(false);
+            }
             slotWeapon = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (slotWeapon) EquipWeapon(inventoryWeapons.y);
+            if (slotWeapon)
+            {
+                EquipWeapon(inventoryWeapons.y);
+                Slot2.activeToggle(true);
+                Slot1.activeToggle(false);
+            }
             slotWeapon = false;
+            
         }
 
         //OBTAIN WEAPONS
@@ -81,10 +96,12 @@ public class InventoryController : MonoBehaviour
         if (slotWeapon)
         { 
             inventoryWeapons.x = weaponIndex;
+            Slot1.EquipWeapon(weaponIndex);
         }
         else
         {
             inventoryWeapons.y = weaponIndex;
+            Slot2.EquipWeapon(weaponIndex);
         }
         EquipWeapon(weaponIndex);
     }
