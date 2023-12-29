@@ -235,7 +235,7 @@ MonoBehaviour:
   timeBetweenShots: 0
   spread: 3
   bulletLife: 1.5
-  bulletSpeed: 180
+  bulletSpeed: 50
   magazineSize: 100
   bulletsPerTap: 1
   allowButtonHold: 1

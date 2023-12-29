@@ -81,9 +81,11 @@ public class Gun : MonoBehaviour
         if (!shootRight) bullet.transform.Rotate(Vector3.right, 180);
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-        if (BulletBehaviour != null)
+        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, shootRight, ySpread, bulletLife);
+        else
         {
-            BulletBehaviour.InitializeBullet(bulletSpeed, shootRight, ySpread, bulletLife);
+            Projectile Projectile = bullet.GetComponent<Projectile>();
+            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, shootRight, ySpread, bulletLife);
         }
 
         if (allowInvoke)
