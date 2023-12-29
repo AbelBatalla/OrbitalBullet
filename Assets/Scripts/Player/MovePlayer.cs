@@ -15,6 +15,7 @@ public class MovePlayer : MonoBehaviour
     Vector3 lastPosition = new Vector3(0,0,0);
     bool recoil = false;
     float recoilMax, recoilAccum, recoilSpeed;
+    public bool lookRight = true;
 
 
     // Start is called before the first frame update
@@ -58,7 +59,7 @@ public class MovePlayer : MonoBehaviour
             if (Input.GetKey(KeyCode.A))
             {
                 target = transform.parent.position + Quaternion.AngleAxis(angle, Vector3.up) * direction;
-
+                lookRight = false;
                 if (charControl.Move(target - position) != CollisionFlags.None)
                 {
 
@@ -71,7 +72,7 @@ public class MovePlayer : MonoBehaviour
             {
                 startDirection.x = 95.0f;
                 target = transform.parent.position + Quaternion.AngleAxis(-angle, Vector3.up) * direction;
-
+                lookRight = true;
                 if (charControl.Move(target - position) != CollisionFlags.None)
                 {
                     Debug.Log(position);

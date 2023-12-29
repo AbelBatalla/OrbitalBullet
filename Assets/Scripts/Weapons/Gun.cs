@@ -28,12 +28,11 @@ public class Gun : MonoBehaviour
     int bulletsLeft, bulletsShot;
 
     bool shooting, readyToShoot;
-    bool shootRight = true;
 
     private void Start()
     {
         MovePlayer = player.GetComponent<MovePlayer>();
-        GunController = player.GetComponent<InventoryController>();   
+        GunController = player.GetComponent<InventoryController>();
         audioSource = player.GetComponent<AudioSource>();
     }
 
@@ -78,14 +77,13 @@ public class Gun : MonoBehaviour
         bulletsLeft--;
         bulletsShot++;
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.Euler(90f, bulletSpawnPoint.eulerAngles.y, 0f));
-        if (!shootRight) bullet.transform.Rotate(Vector3.right, 180);
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, shootRight, ySpread, bulletLife);
+        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife);
         else
         {
             Projectile Projectile = bullet.GetComponent<Projectile>();
-            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, shootRight, ySpread, bulletLife);
+            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife);
         }
 
         if (allowInvoke)
