@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     public bool useGravity;
 
     //Damage
-    public int explosionDamage;
+    public float explosionDamage;
     public float explosionRange;
 
     //Lifetime
@@ -75,9 +75,13 @@ public class Projectile : MonoBehaviour
 
         //Check for enemies 
         Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
+        Debug.Log("Number of enemies detected: " + enemies.Length);
+        Debug.Log(enemies);
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<Enemy>().takeDamage(explosionDamage);
+            Enemy enemyScript = enemies[i].GetComponent<Enemy>();
+            if (enemyScript != null) enemyScript.takeDamage(explosionDamage);
+            else Debug.Log("Null Component");
         }
         StopRender();
     }

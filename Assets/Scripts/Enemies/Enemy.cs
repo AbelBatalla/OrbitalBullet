@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
         {
             takeDamage(10f);
         }
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0) Destroy(transform.parent.gameObject);
     }
 
     public void takeDamage(float damage) { 
