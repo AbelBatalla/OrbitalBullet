@@ -14,6 +14,7 @@ public class BulletBehaviour : MonoBehaviour
     bool stop = false;
     private Renderer myRenderer;
     private Light myLight;
+    private SphereCollider mySphereCollider;
 
     void Update()
     {
@@ -40,21 +41,21 @@ public class BulletBehaviour : MonoBehaviour
         Debug.Log("Bullet Created with values: ySpread: " + ySpread + "speed: " + rotationSpeed + "life: " + life);
         myRenderer = GetComponent<MeshRenderer>();
         myLight = GetComponent<Light>();
+        mySphereCollider = GetComponent<SphereCollider>();
     }
 
     private void StopRender()
     {
         stop = true;
         myRenderer.enabled = false;
+        if (mySphereCollider != null)
+        {
+            mySphereCollider.enabled = false;
+        }
         if (myLight != null)
         {
             myLight.enabled = false;
         }
         Destroy(gameObject, 2.0f);
-    }
-
-
-    
-
-
+    }   
 }
