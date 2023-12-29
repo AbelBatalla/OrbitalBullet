@@ -2007,6 +2007,7 @@ MonoBehaviour:
   rotationSpeed: 100
   jumpSpeed: 12
   gravity: 20
+  lookRight: 1
 --- !u!4 &1106355707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e070e7c5e6149448b823a5e4f0097143, type: 3}
@@ -3331,6 +3332,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1106355704}
+    - target: {fileID: 8466574230153282689, guid: c3c6193b0ff28184c8098f4be70419f9, type: 3}
+      propertyPath: bulletLife
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466574230153282689, guid: c3c6193b0ff28184c8098f4be70419f9, type: 3}
+      propertyPath: bulletSpeed
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 8466574230153282689, guid: c3c6193b0ff28184c8098f4be70419f9, type: 3}
       propertyPath: recoilSpeed
       value: 0
