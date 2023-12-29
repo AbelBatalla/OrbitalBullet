@@ -16,6 +16,7 @@ public class Gun : MonoBehaviour
     public bool allowInvoke = true;
 
     MovePlayer MovePlayer;
+    InventoryController GunController;
     public float recoilLength = 5f;
     public float recoilSpeed = 90f;
     public GameObject player;
@@ -32,7 +33,8 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         MovePlayer = player.GetComponent<MovePlayer>();
-        audioSource = GetComponent<AudioSource>();
+        GunController = player.GetComponent<InventoryController>();   
+        audioSource = player.GetComponent<AudioSource>();
     }
 
     private void Awake()
@@ -50,14 +52,22 @@ public class Gun : MonoBehaviour
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
-        if (readyToShoot && shooting && bulletsLeft > 0)
+        if (readyToShoot && shooting)
         {
-            bulletsShot = 0;
-            Shoot();
+            if (bulletsLeft > 0) {
+                bulletsShot = 0;
+                Shoot();
+            }
+            else
+            {
+                if (!allowButtonHold || (Input.GetKeyDown(KeyCode.Mouse0))) GunController.failedToShoot();
+            }
         }
+        
 
         if (Input.GetKeyDown(KeyCode.R)) {
             bulletsLeft = magazineSize;
+            GunController.playReloadAudio();
         }
 
     }
@@ -89,6 +99,7 @@ public class Gun : MonoBehaviour
                 Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f));
             }
             MovePlayer.giveRecoil(recoilLength, recoilSpeed);
+            GunController.updateAmmo((bulletsLeft + 1 - bulletsPerTap) / bulletsPerTap);
         }
 
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
@@ -102,4 +113,6 @@ public class Gun : MonoBehaviour
         readyToShoot = true;
         allowInvoke = true;
     }
+
+    public int getAmmo() { return bulletsLeft / bulletsPerTap; }
 }
