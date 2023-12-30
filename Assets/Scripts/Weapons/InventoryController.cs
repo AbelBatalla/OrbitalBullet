@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class InventoryController : MonoBehaviour
 {
     public GameObject[] weapons;
     private Gun[] GunScripts;
+    private int[] ammo; //index is type, value is quantity
+    public int[] ammoInitialQuantity;
     public WeaponSlot Slot1, Slot2;
     private Vector2Int inventoryWeapons;
     public int currentWeapon = 0; //Deletable, just used for debugging
@@ -17,6 +21,8 @@ public class InventoryController : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         GunScripts = new Gun[weapons.Length];
+        ammo = new int[ammoInitialQuantity.Length];
+        Array.Copy(ammoInitialQuantity, ammo, ammoInitialQuantity.Length);
         inventoryWeapons.x = 0;
         inventoryWeapons.y = -1;
         currentWeapon = 0;
@@ -53,6 +59,21 @@ public class InventoryController : MonoBehaviour
             }
         }
 
+        //RELOAD WEAPONS
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Array.Copy(ammoInitialQuantity, ammo, ammoInitialQuantity.Length);
+            foreach (Gun gun in GunScripts) {
+                if (gun != null)
+                {
+                    int type = gun.getAmmoType();
+                    gun.setAmmo(ammo[type]);
+                }
+            }
+            Slot1.setAmmo(GunScripts[inventoryWeapons.x].getAmmo());
+            if (inventoryWeapons.y != -1) Slot2.setAmmo(GunScripts[inventoryWeapons.y].getAmmo());
+            playReloadAudio();
+        }
         //OBTAIN WEAPONS
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -98,8 +119,8 @@ public class InventoryController : MonoBehaviour
                 Slot2.activeToggle(true);
                 Slot1.activeToggle(false);
             }
-            ObtainWeapon(weaponIndex);
             playObtainAudio();
+            ObtainWeapon(weaponIndex);
         }
     }
 
@@ -114,7 +135,12 @@ public class InventoryController : MonoBehaviour
         }
         currentWeapon = weaponIndex;
         if (first) GunScripts[weaponIndex] = weapons[weaponIndex].GetComponent<Gun>();
-        if (weaponIndex != -1) updateAmmo(GunScripts[weaponIndex].getAmmo());
+        if (weaponIndex != -1)
+        {
+            int type = GunScripts[weaponIndex].getAmmoType();
+            GunScripts[weaponIndex].setAmmo(ammo[type]);
+            updateAmmo(ammo[type], GunScripts[weaponIndex].getAmmo(), type);
+        }
     }
 
     void ObtainWeapon(int weaponIndex)
@@ -151,7 +177,7 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    public void playReloadAudio() {
+    private void playReloadAudio() {
         if (audioSource != null && reloadAudio != null)
         {
             audioSource.PlayOneShot(reloadAudio);
@@ -164,14 +190,27 @@ public class InventoryController : MonoBehaviour
             audioSource.PlayOneShot(failedToShootAudio);
         }
     }
-    public void updateAmmo(int ammo) {
+    public void updateAmmo(int realAmmoValue, int showAmmoValue, int type) {
+        ammo[type] = realAmmoValue;
+
         if (slotWeapon)
         {
-            Slot1.setAmmo(ammo);
+            Slot1.setAmmo(showAmmoValue);
+            if (inventoryWeapons.y != -1)
+            {
+                if (weapons[inventoryWeapons.y].GetComponent<Gun>()?.getAmmoType() == type)
+                {
+                    Slot2.setAmmo(showAmmoValue);
+                }
+            }
         }
         else
         {
-            Slot2.setAmmo(ammo);
+            Slot2.setAmmo(showAmmoValue);
+            if (weapons[inventoryWeapons.x].GetComponent<Gun>()?.getAmmoType() == type)
+            {
+                Slot1.setAmmo(showAmmoValue);
+            }
         }
     }
 

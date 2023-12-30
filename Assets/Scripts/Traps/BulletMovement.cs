@@ -22,7 +22,6 @@ public class BulletMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Bullet");
         if(other.CompareTag("Player") || other.CompareTag("Level")){
             if(other.CompareTag("Player")) p_health.TakeDamage(10.0f);
             Instantiate(explosionEffect, transform.position, Quaternion.identity);

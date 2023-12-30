@@ -12,9 +12,10 @@ public class Gun : MonoBehaviour
     public float bulletLife = 10f;
     public float bulletSpeed = 180f;
     public float damage = 10f;
-    public int magazineSize, bulletsPerTap;
+    public int bulletsPerTap;
     public bool allowButtonHold;
     public bool allowInvoke = true;
+    public int ammoType;
 
     MovePlayer MovePlayer;
     InventoryController GunController;
@@ -27,7 +28,8 @@ public class Gun : MonoBehaviour
     public AudioClip soundClip;
     public GameObject muzzleFlash;
 
-    int bulletsLeft, bulletsShot;
+    int bulletsLeft = 0;
+    int bulletsShot;
 
     bool shooting, readyToShoot;
 
@@ -40,7 +42,6 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
-        bulletsLeft = magazineSize;
         readyToShoot = true;
     }
     void Update()
@@ -63,12 +64,6 @@ public class Gun : MonoBehaviour
             {
                 if (!allowButtonHold || (Input.GetKeyDown(KeyCode.Mouse0))) GunController.failedToShoot();
             }
-        }
-        
-
-        if (Input.GetKeyDown(KeyCode.R)) {
-            bulletsLeft = magazineSize;
-            GunController.playReloadAudio();
         }
 
     }
@@ -101,7 +96,7 @@ public class Gun : MonoBehaviour
                 Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f), bulletSpawnPoint.transform);
             }
             MovePlayer.giveRecoil(recoilLength, recoilSpeed);
-            GunController.updateAmmo((bulletsLeft + 1 - bulletsPerTap) / bulletsPerTap);
+            GunController.updateAmmo(bulletsLeft, (bulletsLeft + 1 - bulletsPerTap) / bulletsPerTap, ammoType);
         }
 
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
@@ -123,4 +118,8 @@ public class Gun : MonoBehaviour
 
 
     public int getAmmo() { return bulletsLeft / bulletsPerTap; }
+
+    public int getAmmoType() { return ammoType; }
+
+    public void setAmmo(int ammo) {  bulletsLeft = ammo; }
 }

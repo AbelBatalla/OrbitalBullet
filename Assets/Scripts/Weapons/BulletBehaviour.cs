@@ -36,6 +36,7 @@ public class BulletBehaviour : MonoBehaviour
         }
         else if (collision.collider.CompareTag("Enemy"))
         {
+            Debug.Log("Hit Enemy");
             Enemy enemyScript = collision.collider.GetComponent<Enemy>();
             if (enemyScript != null) enemyScript.takeDamage(damage);
             else Debug.Log("Null Component");
