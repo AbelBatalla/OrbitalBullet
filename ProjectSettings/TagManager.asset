@@ -4,22 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-=======
-  - Enemy
->>>>>>> main
   - Wall
+  - Enemy
+  - Level
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Guides
+  - 
   - Water
   - UI
-  - Player
-  - Bullet
-  - Enemy
-  - Projectile
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
