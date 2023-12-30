@@ -22,6 +22,7 @@ public class FollowPlayer : MonoBehaviour
     {
         // Compute current direction
         Vector3 currentDirection = player.transform.position - player.transform.parent.position;
+
         currentDirection.y = 0.0f;
         currentDirection.Normalize();
         // Change orientation of the camera pivot to match the player's
@@ -32,6 +33,11 @@ public class FollowPlayer : MonoBehaviour
             orientation = Quaternion.AngleAxis(180.0f, Vector3.up);
         else
             orientation = Quaternion.FromToRotation(startDirection, currentDirection);
+        
+        Vector3 newPosition = player.transform.position;
+        if(transform.parent.position.y - player.transform.position.y > 8) newPosition.y = player.transform.position.y;
+        transform.parent.position = newPosition;
+
         transform.parent.rotation = orientation;
     }
 }

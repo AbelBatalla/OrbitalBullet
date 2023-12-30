@@ -22,7 +22,6 @@ public class MovePlayer : MonoBehaviour
         startDirection.y = 0.0f;
         startDirection.x = 95.0f;
         startDirection.Normalize();
-
         speedY = 0;
 
         playerObject = GameObject.Find("T-Pose");
@@ -34,7 +33,6 @@ public class MovePlayer : MonoBehaviour
     {
         CharacterController charControl = GetComponent<CharacterController>();
         Vector3 position;
-        bool controlJump = false;
 
         // Left-right movement
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
@@ -45,7 +43,6 @@ public class MovePlayer : MonoBehaviour
             anim.SetFloat("Blend", 0.5f ,0.1f, Time.deltaTime);
             position = transform.position;
 
-            Debug.Log(position - lastPosition);
 
             lastPosition = transform.position;
             angle = rotationSpeed * Time.deltaTime;
@@ -60,7 +57,6 @@ public class MovePlayer : MonoBehaviour
                 {   
                     
                     transform.position = position;
-                    Debug.Log(position);
                     Physics.SyncTransforms();
                 }
             }
@@ -71,7 +67,6 @@ public class MovePlayer : MonoBehaviour
                 
                 if (charControl.Move(target - position) != CollisionFlags.None)
                 {
-                    Debug.Log(position);
                     transform.position = position;
                     Physics.SyncTransforms();
                 }
@@ -108,7 +103,8 @@ public class MovePlayer : MonoBehaviour
                 anim.SetBool("Grounded", true);
                 speedY = 0.0f;
             }
-                
+
+
             if (Input.GetKey(KeyCode.W)) {
                 speedY = jumpSpeed;
                 anim.SetBool("Jump",true);
