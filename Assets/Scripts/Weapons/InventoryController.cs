@@ -88,6 +88,21 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    public void getWeapon(int weaponIndex)
+    {
+        if (weaponIndex < weapons.Length && inventoryWeapons.x != weaponIndex && inventoryWeapons.y != weaponIndex)
+        {
+            if(inventoryWeapons.y == -1)
+            {
+                slotWeapon = false;
+                Slot2.activeToggle(true);
+                Slot1.activeToggle(false);
+            }
+            ObtainWeapon(weaponIndex);
+            playObtainAudio();
+        }
+    }
+
     void EquipWeapon(int weaponIndex, bool first)
     {
         for (int i = 0; i < weapons.Length; i++)
@@ -105,12 +120,14 @@ public class InventoryController : MonoBehaviour
     void ObtainWeapon(int weaponIndex)
     {
         if (slotWeapon)
-        { 
+        {
+            if(inventoryWeapons.x != -1) GunScripts[inventoryWeapons.x].dropHolder();
             inventoryWeapons.x = weaponIndex;
             Slot1.EquipWeapon(weaponIndex);
         }
         else
         {
+            if (inventoryWeapons.y != -1) GunScripts[inventoryWeapons.y].dropHolder();
             inventoryWeapons.y = weaponIndex;
             Slot2.EquipWeapon(weaponIndex);
         }

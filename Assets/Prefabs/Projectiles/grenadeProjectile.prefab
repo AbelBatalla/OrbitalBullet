@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2873374741728735590}
   - component: {fileID: 4734402576702921046}
   - component: {fileID: 7251705332834196843}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: -3383926853396398419}
   - component: {fileID: 8150985502118876252}
   - component: {fileID: 2265342878941298699}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: grenadeProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,10 +335,9 @@ MonoBehaviour:
   explosion: {fileID: 1000011128802252, guid: 2cc516ce1b75b7942af053ed32de1e9f, type: 3}
   whatIsEnemies:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 64
   bounciness: 0.65
   useGravity: 1
-  explosionDamage: 30
   explosionRange: 2.5
   maxCollisions: 5
   explodeOnTouch: 1
@@ -361,7 +360,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.27
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2265342878941298699
 Rigidbody:
