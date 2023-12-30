@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3632784685388352933}
-  - component: {fileID: 5848380573320242317}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -34,22 +33,6 @@ Transform:
   - {fileID: 2321079207748425459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5848380573320242317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1763423657681829168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260544863966467458c0999b41e5fcca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 0
-  maxShield: 50
-  shield: 0
 --- !u!1 &6626665040884967936
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,9 +44,9 @@ GameObject:
   - component: {fileID: 2503960148143041194}
   - component: {fileID: 1725285997316012077}
   - component: {fileID: 7046349824287737597}
-  - component: {fileID: 7147284934040413468}
   - component: {fileID: 4748941344735814905}
-  m_Layer: 6
+  - component: {fileID: 1110395552676734784}
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -135,8 +118,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7147284934040413468
-SphereCollider:
+--- !u!114 &4748941344735814905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6626665040884967936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260544863966467458c0999b41e5fcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 0
+  maxShield: 50
+  shield: 0
+--- !u!65 &1110395552676734784
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -154,24 +153,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Size: {x: 1.7, y: 1.7, z: 1.7}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4748941344735814905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6626665040884967936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260544863966467458c0999b41e5fcca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 0
-  maxShield: 50
-  shield: 0
 --- !u!1001 &9173854557915550699
 PrefabInstance:
   m_ObjectHideFlags: 0

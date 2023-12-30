@@ -20,7 +20,6 @@ public class BulletMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Bullet");
         if(other.CompareTag("Player") || other.CompareTag("Level")){
             
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
