@@ -214,10 +214,10 @@ MonoBehaviour:
   bulletLife: 2.5
   bulletSpeed: 70
   damage: 40
-  magazineSize: 12
   bulletsPerTap: 1
   allowButtonHold: 1
   allowInvoke: 1
+  ammoType: 2
   recoilLength: 5
   recoilSpeed: 90
   player: {fileID: 0}

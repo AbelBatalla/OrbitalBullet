@@ -37531,6 +37531,7 @@ MonoBehaviour:
   - {fileID: 233011913}
   - {fileID: 1216632878}
   - {fileID: 1182069417}
+  ammoInitialQuantity: 280000004b0000000c000000
   Slot1: {fileID: 470525543}
   Slot2: {fileID: 2118921432}
   currentWeapon: 0
@@ -46495,11 +46496,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5547796208151902207, guid: bdd93f20eba2c294f86c285689e7bc70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.16
+      value: 3.15
       objectReference: {fileID: 0}
     - target: {fileID: 5547796208151902207, guid: bdd93f20eba2c294f86c285689e7bc70, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.29
+      value: -30.53
       objectReference: {fileID: 0}
     - target: {fileID: 5547796208151902207, guid: bdd93f20eba2c294f86c285689e7bc70, type: 3}
       propertyPath: m_LocalRotation.w
