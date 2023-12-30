@@ -28,7 +28,7 @@ public class MovePlayer : MonoBehaviour
         startDirection.Normalize();
         speedY = 0;
 
-        playerObject = GameObject.Find("T-Pose");
+        playerObject = GameObject.Find("T-Pose_new");
         anim = playerObject.GetComponentInChildren<Animator>();
     }
 
