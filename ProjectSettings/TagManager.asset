@@ -4,6 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
+=======
+  - Enemy
+>>>>>>> main
   - Wall
   layers:
   - Default
@@ -14,8 +18,8 @@ TagManager:
   - UI
   - Player
   - Bullet
-  - 
-  - 
+  - Enemy
+  - Projectile
   - 
   - 
   - 
