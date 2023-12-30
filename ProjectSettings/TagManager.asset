@@ -6,27 +6,16 @@ TagManager:
   tags:
   - Wall
   - Enemy
-<<<<<<< HEAD
   - Level
-=======
->>>>>>> main
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-<<<<<<< HEAD
-  - 
-  - Water
-  - UI
-  - 
-  - 
-=======
-  - Item
-  - Water
-  - UI
   - Enemy
-  - Bullet
->>>>>>> main
+  - Water
+  - UI
+  - 
+  - 
   - 
   - 
   - 
