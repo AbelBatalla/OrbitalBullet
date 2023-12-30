@@ -328,6 +328,7 @@ MonoBehaviour:
   spread: 3
   bulletLife: 1.5
   bulletSpeed: 180
+  damage: 8
   magazineSize: 100
   bulletsPerTap: 1
   allowButtonHold: 1

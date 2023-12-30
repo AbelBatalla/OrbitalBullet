@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
     public float spread = 3f;
     public float bulletLife = 10f;
     public float bulletSpeed = 180f;
+    public float damage = 10f;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     public bool allowInvoke = true;
@@ -80,11 +81,11 @@ public class Gun : MonoBehaviour
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.Euler(90f, bulletSpawnPoint.eulerAngles.y, 0f));
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife);
+        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife, damage);
         else
         {
             Projectile Projectile = bullet.GetComponent<Projectile>();
-            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife);
+            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife, damage);
         }
 
         if (allowInvoke)

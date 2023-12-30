@@ -15,7 +15,7 @@ public class Bilboard : MonoBehaviour
             {
                 cam = mainCameraObj.transform;
             }
-            Debug.Log("Camera Not Found");
+            else Debug.Log("Camera Not Found");
         }
     }
 
