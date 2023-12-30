@@ -35,8 +35,6 @@ public class Projectile : MonoBehaviour
     int collisions = 0;
     PhysicMaterial physics_mat;
     bool hitWall = false;
-    Vector3 gravity = new Vector3(0, -9.81f, 0); // Earth-like gravity
-    Vector3 velocity = new Vector3(0, 0, 0); // Earth-like gravity
 
     private void Start()
     {
@@ -148,7 +146,7 @@ public class Projectile : MonoBehaviour
         mySphereCollider.material = physics_mat;
         myRigidbody.useGravity = true;
         Vector3 currentVelocity = myRigidbody.velocity;
-        currentVelocity.y = 6+ySpread;
+        currentVelocity.y = 15+ySpread;
         myRigidbody.velocity = currentVelocity;
 
     }

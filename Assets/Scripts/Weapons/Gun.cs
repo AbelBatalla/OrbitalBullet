@@ -20,6 +20,7 @@ public class Gun : MonoBehaviour
     public float recoilLength = 5f;
     public float recoilSpeed = 90f;
     public GameObject player;
+    public GameObject gunHolder;
 
     private AudioSource audioSource;
     public AudioClip soundClip;
@@ -96,7 +97,7 @@ public class Gun : MonoBehaviour
             }
             if (muzzleFlash != null)
             {
-                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f));
+                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f), bulletSpawnPoint.transform);
             }
             MovePlayer.giveRecoil(recoilLength, recoilSpeed);
             GunController.updateAmmo((bulletsLeft + 1 - bulletsPerTap) / bulletsPerTap);
@@ -113,6 +114,12 @@ public class Gun : MonoBehaviour
         readyToShoot = true;
         allowInvoke = true;
     }
+
+    public void dropHolder()
+    {
+        Instantiate(gunHolder, player.transform.position, Quaternion.identity);
+    }
+
 
     public int getAmmo() { return bulletsLeft / bulletsPerTap; }
 }

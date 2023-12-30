@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 7552209717952661747}
   - component: {fileID: 5135056842898691634}
   - component: {fileID: 8110752410502915434}
-  - component: {fileID: 2099718907089956200}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Watergun_01_Refill_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,28 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2099718907089956200
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 138682774031983771}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
 --- !u!1 &894810121157218976
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,9 +96,9 @@ GameObject:
   - component: {fileID: 1186826463236213085}
   - component: {fileID: 8889072592291273175}
   - component: {fileID: 5376307538788001917}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GrenadeLauncher
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894810121157218976}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.7283106, y: 1.584, z: -7.9988594}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -144,7 +121,7 @@ Transform:
   - {fileID: 3607477452420120934}
   - {fileID: 946591068108984169}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4080979289883942316
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -230,19 +207,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 946591068108984169}
-  bulletPrefab: {fileID: 6925440512669344103, guid: c81a747cd395cc845b67ca05a91d42b1, type: 3}
+  bulletPrefab: {fileID: 8300867203522200777, guid: 0f28485c4472d14448395e875adccf3e, type: 3}
   timeBetweenShooting: 1
   timeBetweenShots: 0
-  spread: 3
-  bulletLife: 1.5
-  bulletSpeed: 50
-  magazineSize: 100
+  spread: 1.5
+  bulletLife: 2.5
+  bulletSpeed: 70
+  magazineSize: 12
   bulletsPerTap: 1
   allowButtonHold: 1
   allowInvoke: 1
   recoilLength: 5
   recoilSpeed: 90
   player: {fileID: 0}
+  gunHolder: {fileID: 700992443065657080, guid: 05500305fb4664d42a6a9c712e844ca5, type: 3}
   soundClip: {fileID: 8300000, guid: acf459ac68212f64490f36974905fad4, type: 3}
   muzzleFlash: {fileID: 1000010254994808, guid: e037bb9f92af5dc44a965699a6cda14a, type: 3}
 --- !u!1 &2932031333954390719
@@ -256,7 +234,7 @@ GameObject:
   - component: {fileID: 3607477452420120934}
   - component: {fileID: 1977496255494419710}
   - component: {fileID: 5612905357501207492}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Watergun_01_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946591068108984169}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletSpawnPoint(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +348,7 @@ GameObject:
   - component: {fileID: 7581027241657103564}
   - component: {fileID: 9202340514284923933}
   - component: {fileID: 5770874592548875399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Watergun_01_Pump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
