@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     public bool useGravity;
 
     //Damage
-    public float explosionDamage;
+    private float explosionDamage = 10f;
     public float explosionRange;
 
     //Lifetime
@@ -35,8 +35,6 @@ public class Projectile : MonoBehaviour
     int collisions = 0;
     PhysicMaterial physics_mat;
     bool hitWall = false;
-    Vector3 gravity = new Vector3(0, -9.81f, 0); // Earth-like gravity
-    Vector3 velocity = new Vector3(0, 0, 0); // Earth-like gravity
 
     private void Start()
     {
@@ -75,8 +73,6 @@ public class Projectile : MonoBehaviour
 
         //Check for enemies 
         Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
-        Debug.Log("Number of enemies detected: " + enemies.Length);
-        Debug.Log(enemies);
         for (int i = 0; i < enemies.Length; i++)
         {
             Enemy enemyScript = enemies[i].GetComponent<Enemy>();
@@ -88,7 +84,6 @@ public class Projectile : MonoBehaviour
 
     private void StopRender()
     {
-        myRigidbody.velocity = new Vector3(0, 0, 0);
         stop = true;
         if (myRenderer != null) {
             myRenderer.enabled = false;
@@ -103,6 +98,7 @@ public class Projectile : MonoBehaviour
         }
         if (myRigidbody != null)
         {
+            myRigidbody.velocity = new Vector3(0, 0, 0);
             myRigidbody.useGravity = false;
         }
         Destroy(gameObject, 1.5f);
@@ -129,8 +125,12 @@ public class Projectile : MonoBehaviour
             rotationSpeed = -rotationSpeed / 2;
         }
 
-        //Explode if bullet hits an enemy directly and explodeOnTouch is activated
-        if (collision.collider.CompareTag("Enemy") && explodeOnTouch) Explode();
+        //Explode if bullet hits an enemy directly and explodeOnTouch is activadted
+        if (collision.collider.CompareTag("Enemy") && explodeOnTouch)
+        {
+            Explode();
+        }
+            
     }
 
     private void Setup()
@@ -148,13 +148,14 @@ public class Projectile : MonoBehaviour
         mySphereCollider.material = physics_mat;
         myRigidbody.useGravity = true;
         Vector3 currentVelocity = myRigidbody.velocity;
-        currentVelocity.y = 6+ySpread;
+        currentVelocity.y = 15+ySpread;
         myRigidbody.velocity = currentVelocity;
 
     }
 
-    public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float ySpreadValue, float lifeValue)
+    public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float ySpreadValue, float lifeValue, float damageValue)
     {
+        explosionDamage = damageValue;
         rotationSpeed = rotationSpeedValue;
         rotateRight = rotateRightValue;
         life = lifeValue;

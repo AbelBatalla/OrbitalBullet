@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
     public float spread = 3f;
     public float bulletLife = 10f;
     public float bulletSpeed = 180f;
+    public float damage = 10f;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     public bool allowInvoke = true;
@@ -20,6 +21,7 @@ public class Gun : MonoBehaviour
     public float recoilLength = 5f;
     public float recoilSpeed = 90f;
     public GameObject player;
+    public GameObject gunHolder;
 
     private AudioSource audioSource;
     public AudioClip soundClip;
@@ -79,11 +81,11 @@ public class Gun : MonoBehaviour
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.Euler(90f, bulletSpawnPoint.eulerAngles.y, 0f));
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
-        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife);
+        if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife, damage);
         else
         {
             Projectile Projectile = bullet.GetComponent<Projectile>();
-            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife);
+            if (Projectile != null) Projectile.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife, damage);
         }
 
         if (allowInvoke)
@@ -96,7 +98,7 @@ public class Gun : MonoBehaviour
             }
             if (muzzleFlash != null)
             {
-                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f));
+                Instantiate(muzzleFlash, bulletSpawnPoint.position, bulletSpawnPoint.rotation*Quaternion.Euler(0f, -90f, 0f), bulletSpawnPoint.transform);
             }
             MovePlayer.giveRecoil(recoilLength, recoilSpeed);
             GunController.updateAmmo((bulletsLeft + 1 - bulletsPerTap) / bulletsPerTap);
@@ -113,6 +115,12 @@ public class Gun : MonoBehaviour
         readyToShoot = true;
         allowInvoke = true;
     }
+
+    public void dropHolder()
+    {
+        Instantiate(gunHolder, player.transform.position, Quaternion.identity);
+    }
+
 
     public int getAmmo() { return bulletsLeft / bulletsPerTap; }
 }

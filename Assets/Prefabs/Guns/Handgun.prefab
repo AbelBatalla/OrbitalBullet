@@ -212,6 +212,7 @@ MonoBehaviour:
   spread: 0.5
   bulletLife: 1.5
   bulletSpeed: 180
+  damage: 20
   magazineSize: 16
   bulletsPerTap: 1
   allowButtonHold: 0
@@ -219,6 +220,7 @@ MonoBehaviour:
   recoilLength: 2
   recoilSpeed: 80
   player: {fileID: 0}
+  gunHolder: {fileID: 700992443065657080, guid: 781e905b113f028428fad6ca86dc1a9f, type: 3}
   soundClip: {fileID: 8300000, guid: 46a1d07027f528942b921792f045be38, type: 3}
   muzzleFlash: {fileID: 1000010254994808, guid: a41f5ecc08b9a704782eef8fa5248423, type: 3}
 --- !u!1 &4045668333353249870

@@ -324,16 +324,17 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1926839512642465364, guid: 0fb3ba7e12a09d1458d5e5eb14d3639b, type: 3}
   timeBetweenShooting: 0.75
   timeBetweenShots: 0
-  spread: 5
+  spread: 12
   bulletLife: 0.3
-  bulletSpeed: 180
-  magazineSize: 50
+  bulletSpeed: 100
+  magazineSize: 75
   bulletsPerTap: 5
   allowButtonHold: 1
   allowInvoke: 1
-  recoilLength: 8
+  recoilLength: 6
   recoilSpeed: 90
   player: {fileID: 0}
+  gunHolder: {fileID: 700992443065657080, guid: d46923c8f05bd8749a85cae779d5a43d, type: 3}
   soundClip: {fileID: 8300000, guid: e8440e7985af1cc4aab4ce9be3a6056c, type: 3}
   muzzleFlash: {fileID: 1000010254994808, guid: bcf3857ec902e0047896f8bc97c8c22c, type: 3}
 --- !u!1 &8992480130798919302
@@ -347,7 +348,6 @@ GameObject:
   - component: {fileID: 8171497658342502669}
   - component: {fileID: 5274395755293949552}
   - component: {fileID: 5859536220547590811}
-  - component: {fileID: 7276060214715948262}
   m_Layer: 0
   m_Name: Watergun_02_Refill
   m_TagString: Untagged
@@ -420,25 +420,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7276060214715948262
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8992480130798919302}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: 27d85ed0b41b13e4b931011bd61b932b, type: 3}
