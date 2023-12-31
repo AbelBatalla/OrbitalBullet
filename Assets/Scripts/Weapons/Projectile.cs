@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     public Renderer myRenderer;
     private Light myLight;
     private SphereCollider mySphereCollider;
+    private float tolerance = 0.4f;
 
     //Assignables
     private Rigidbody myRigidbody;
@@ -109,6 +110,27 @@ public class Projectile : MonoBehaviour
         rotationSpeed = rotationSpeed * 0.7f;
         //Count up collisions
         collisions++;
+
+        if (collision.collider.CompareTag("Map")) Debug.Log("Collision");
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                // Check if the normal of the contact point is approximately horizontal
+                if (Mathf.Abs(contact.normal.y) < tolerance) // 'tolerance' is a small value like 0.1
+                {
+                    Debug.Log("WALL");
+                
+                    // Get current velocity
+                    Vector3 currentVelocity = myRigidbody.velocity;
+
+                    // Set x and z components of the velocity to 0
+                    currentVelocity.x = 0f;
+                    currentVelocity.z = 0f;
+
+                    // Apply the modified velocity back to the Rigidbody
+                    myRigidbody.velocity = currentVelocity;
+                    rotationSpeed = -rotationSpeed / 1.5f;
+            }
+            }
 
         if (collision.collider.CompareTag("Wall") || collision.collider.CompareTag("Enemy"))
         {

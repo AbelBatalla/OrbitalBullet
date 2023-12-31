@@ -39999,6 +39999,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_1
       objectReference: {fileID: 0}
+    - target: {fileID: 1763423657681829168, guid: fc8575fa75331454b95984a94d1f1c3c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3632784685388352933, guid: fc8575fa75331454b95984a94d1f1c3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.968028
@@ -47686,7 +47690,7 @@ GameObject:
   - component: {fileID: 3312218522738441463}
   m_Layer: 0
   m_Name: lv1
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47743,7 +47747,7 @@ GameObject:
   - component: {fileID: 8671097740635442765}
   m_Layer: 0
   m_Name: lv3
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47786,7 +47790,7 @@ GameObject:
   - component: {fileID: 9173707457315890726}
   m_Layer: 0
   m_Name: lv2
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47884,7 +47888,7 @@ GameObject:
   - component: {fileID: 5841723128726216102}
   m_Layer: 0
   m_Name: lv4
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47903,7 +47907,7 @@ GameObject:
   - component: {fileID: 1685905037}
   m_Layer: 0
   m_Name: lv0
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
