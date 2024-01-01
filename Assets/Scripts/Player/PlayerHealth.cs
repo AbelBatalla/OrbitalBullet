@@ -35,6 +35,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        if(anim.GetBool("Slide") == false) health -= damage;
     }
 }

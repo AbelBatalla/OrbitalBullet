@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Level
   - Map
+  - mesh_player
   layers:
   - Default
   - TransparentFX
