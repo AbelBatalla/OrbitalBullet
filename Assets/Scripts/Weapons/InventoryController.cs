@@ -214,6 +214,23 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    public void giveAmmo(int ammoType)
+    {
+        ammo[ammoType] += ammoInitialQuantity[ammoType];
+        foreach (Gun gun in GunScripts)
+        {
+            if (gun != null)
+            {
+                int type = gun.getAmmoType();
+                gun.setAmmo(ammo[type]);
+            }
+        }
+        Slot1.setAmmo(GunScripts[inventoryWeapons.x].getAmmo());
+        if (inventoryWeapons.y != -1) Slot2.setAmmo(GunScripts[inventoryWeapons.y].getAmmo());
+        playReloadAudio();
+    }
+
+
 
 
 }

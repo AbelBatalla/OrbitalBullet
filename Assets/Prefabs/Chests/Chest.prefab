@@ -88,6 +88,12 @@ MonoBehaviour:
       weight: 1
     - item: {fileID: 2458910227537402382, guid: 05500305fb4664d42a6a9c712e844ca5, type: 3}
       weight: 1
+    - item: {fileID: 3921080536698020982, guid: c3f99b26cff04df40bab044e14aa70c8, type: 3}
+      weight: 1
+    - item: {fileID: 6935763278270399217, guid: 45efa1b42e8ef3745a4538555380fd8d, type: 3}
+      weight: 1
+    - item: {fileID: 8374210727577250327, guid: daabc1dcb8dd4de47835ab7af7fe773c, type: 3}
+      weight: 1
   itemHolder: {fileID: 4501866326342413694}
 --- !u!135 &8988318277230844965
 SphereCollider:
