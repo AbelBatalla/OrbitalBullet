@@ -18,6 +18,8 @@ public class MovePlayer : MonoBehaviour
     float dashMax, dashAccum, dashSpeed;
     public bool lookRight = true;
 
+    int numJumps = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -103,6 +105,8 @@ public class MovePlayer : MonoBehaviour
             orientation = Quaternion.FromToRotation(startDirection, currentDirection);
         transform.rotation = orientation;
 
+        Debug.Log(numJumps);
+        Debug.Log(speedY);
         // Apply up-down movement
         position = transform.position;
         if (charControl.Move(speedY * Time.deltaTime * Vector3.up) != CollisionFlags.None)
@@ -112,19 +116,26 @@ public class MovePlayer : MonoBehaviour
         }
         if (charControl.isGrounded)
         {
+            numJumps = 0;
             if (speedY < 0.0f) {
                 anim.SetBool("Jump",false);
                 anim.SetBool("Grounded", true);
                 speedY = 0.0f;
+                
             }
-
 
             if (Input.GetKey(KeyCode.W)) {
                 speedY = jumpSpeed;
                 anim.SetBool("Jump",true);
                 anim.SetBool("Grounded", false);
+                numJumps = 1;
             }
                 
+        } else if (Input.GetKey(KeyCode.W) && numJumps == 1 && speedY < 0.0f) {
+                speedY = jumpSpeed;
+                anim.SetBool("Jump",true);
+                anim.SetBool("Grounded", false);
+                numJumps = 2;
         }
         else
             speedY -= gravity * Time.deltaTime;
