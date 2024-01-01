@@ -7,14 +7,15 @@ public class MovePlayer : MonoBehaviour
 {
     public float rotationSpeed, jumpSpeed, gravity;
     
-
     Vector3 startDirection;
     float speedY;
     Animator anim;
     GameObject playerObject = null; 
     Vector3 lastPosition = new Vector3(0,0,0);
     bool recoil = false;
+    bool dash = false;
     float recoilMax, recoilAccum, recoilSpeed;
+    float dashMax, dashAccum, dashSpeed;
     public bool lookRight = true;
 
 
@@ -37,7 +38,7 @@ public class MovePlayer : MonoBehaviour
     {
         CharacterController charControl = GetComponent<CharacterController>();
         Vector3 position;
-
+    
         // Left-right movement
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && !recoil)
         {
@@ -76,10 +77,14 @@ public class MovePlayer : MonoBehaviour
                 }
             }
         }
+        else if(Input.GetKey(KeyCode.S)) {
+             giveDash();
+        }
         else
         {
             anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);
             if (recoil) continueRecoil();
+            else if(dash) continueDash();
         }
         
 
@@ -163,6 +168,47 @@ public class MovePlayer : MonoBehaviour
 
         }
         anim.SetBool("Shoot", false);
+    }
+
+    void giveDash() {
+        dash = true;
+        dashMax = 40.0f;
+        dashSpeed = 70.0f;
+        dashAccum = 0f;
+        speedY = 0.0f;
+        anim.SetBool("Slide",true);
+    }
+
+    void continueDash()
+    {   
+        CharacterController charControl = GetComponent<CharacterController>();
+        Vector3 position, direction, target;
+        float rotationAmount = dashSpeed * Time.deltaTime;
+        dashAccum += rotationAmount;
+        if (dashAccum >= dashMax)
+        {
+            dash = false;
+            anim.SetBool("Slide", false);
+        }
+        
+        position = transform.position;
+        direction = position - transform.parent.position;
+
+        float dir_x = startDirection.x;
+        if (dir_x == -95.0f) target = transform.parent.position + Quaternion.AngleAxis(rotationAmount, Vector3.up) * direction;
+        else if (dir_x == 95.0f) target = transform.parent.position + Quaternion.AngleAxis(-rotationAmount, Vector3.up) * direction;
+        else target = transform.parent.position + Quaternion.AngleAxis(rotationAmount, Vector3.up) * direction;
+
+        if (charControl.Move(target - position) != CollisionFlags.None)
+        {
+
+            Debug.Log(position);
+            transform.position = position;
+            Physics.SyncTransforms();
+
+
+        }
+        
     }
 
     /*
