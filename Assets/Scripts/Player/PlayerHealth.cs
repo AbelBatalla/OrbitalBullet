@@ -11,6 +11,8 @@ public class PlayerHealth : MonoBehaviour
     Animator anim;
     GameObject playerObject = null; 
 
+    bool god_mode = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,14 +29,19 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(10f);
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            god_mode = !god_mode;
+        }
         if(health <= 0) {
             anim.SetBool("Death",true);
             gameOver_menu.SetActive(true);
         }
+        if(playerObject.transform.position.y < 0) TakeDamage(100f);
     }
 
     public void TakeDamage(float damage)
     {
-        if(anim.GetBool("Slide") == false) health -= damage;
+        if(anim.GetBool("Slide") == false && !god_mode) health -= damage;
     }
 }

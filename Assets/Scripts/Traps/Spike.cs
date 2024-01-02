@@ -6,22 +6,22 @@ public class Spike : MonoBehaviour
 {
 
     bool up = false;
-  
+    float posY_original;
     void Start()
     {
-        
+        posY_original = transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!up && transform.position.y < 2.62) {
+        if(!up && transform.position.y <= posY_original) {
             transform.position += new Vector3 (0, 0.15f, 0);
-            if(transform.position.y >= 2.62) up = true;
+            if(transform.position.y >= posY_original) up = true;
         }
-        if(up && transform.position.y > 0.97) {
+        if(up && transform.position.y > posY_original - 1.65) {
             transform.position += new Vector3 (0, -0.15f, 0);
-            if(transform.position.y <= 0.97) up = false;
+            if(transform.position.y <= posY_original - 1.65) up = false;
         }
         
         
