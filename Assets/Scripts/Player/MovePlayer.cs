@@ -105,8 +105,7 @@ public class MovePlayer : MonoBehaviour
             orientation = Quaternion.FromToRotation(startDirection, currentDirection);
         transform.rotation = orientation;
 
-        Debug.Log(numJumps);
-        Debug.Log(speedY);
+   
         // Apply up-down movement
         position = transform.position;
         if (charControl.Move(speedY * Time.deltaTime * Vector3.up) != CollisionFlags.None)
