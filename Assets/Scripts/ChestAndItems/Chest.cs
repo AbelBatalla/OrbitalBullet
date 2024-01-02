@@ -8,6 +8,8 @@ public class Chest : MonoBehaviour
 
     bool open, active;
 
+    public animatorScript animator;
+
     void Start()
     {
         open = false;
@@ -28,10 +30,11 @@ public class Chest : MonoBehaviour
                     }
                     else
                     {
-                        ShowItem();
+                        if (animator != null) animator.activa();
+                        Invoke("ShowItem", 0.7f);
                     }
                     active = false;
-                    Invoke("activate", 1f);
+                    Invoke("activate", 2f);
                 }
             }
         }
