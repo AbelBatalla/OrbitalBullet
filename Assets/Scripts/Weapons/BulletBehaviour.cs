@@ -30,7 +30,7 @@ public class BulletBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.collider.CompareTag("Wall"))
+        if (collision.collider.CompareTag("Map"))
         {
             Instantiate(bulletCollision, collision.contacts[0].point, Quaternion.Euler(0, 180, 0));
         }

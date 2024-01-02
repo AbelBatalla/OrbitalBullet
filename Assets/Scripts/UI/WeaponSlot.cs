@@ -25,7 +25,6 @@ public class WeaponSlot : MonoBehaviour
     }
     public void EquipWeapon(int weaponIndex)
     {
-        Debug.Log("RECIEVED");
         for (int i = 0; i < weaponModels.Length; i++)
         {
             if (weaponModels[i] != null)

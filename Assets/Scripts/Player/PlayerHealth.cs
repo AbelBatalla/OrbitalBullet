@@ -9,8 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public float maxHealth = 100f;
     public GameObject gameOver_menu;
     Animator anim;
-    GameObject playerObject = null; 
-
+    GameObject playerObject = null;
     bool god_mode = false;
 
     // Start is called before the first frame update
@@ -44,4 +43,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if(anim.GetBool("Slide") == false && !god_mode) health -= damage;
     }
+
+
 }

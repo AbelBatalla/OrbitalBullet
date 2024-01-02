@@ -129,23 +129,8 @@ public class Projectile : MonoBehaviour
                     // Apply the modified velocity back to the Rigidbody
                     myRigidbody.velocity = currentVelocity;
                     rotationSpeed = -rotationSpeed / 1.5f;
+                }
             }
-            }
-
-        if (collision.collider.CompareTag("Wall") || collision.collider.CompareTag("Enemy"))
-        {
-            hitWall = true;
-            // Get current velocity
-            Vector3 currentVelocity = myRigidbody.velocity;
-
-            // Set x and z components of the velocity to 0
-            currentVelocity.x = 0f;
-            currentVelocity.z = 0f;
-
-            // Apply the modified velocity back to the Rigidbody
-            myRigidbody.velocity = currentVelocity;
-            rotationSpeed = -rotationSpeed / 2;
-        }
 
         //Explode if bullet hits an enemy directly and explodeOnTouch is activadted
         if (collision.collider.CompareTag("Enemy") && explodeOnTouch)
@@ -182,8 +167,6 @@ public class Projectile : MonoBehaviour
         rotateRight = rotateRightValue;
         life = lifeValue;
         ySpread = ySpreadValue;
-        Debug.Log("Grenade Created with values: ySpread: " + ySpread + " speed: " + rotationSpeed + " life: " + life);
-
     }
 
     /// Just to visualize the explosion range

@@ -7,6 +7,8 @@ public class Spike : MonoBehaviour
 
     bool up = false;
     float posY_original;
+    public float speed = 0.035f;
+    public float damage = 20f;
     void Start()
     {
         posY_original = transform.position.y;
@@ -16,11 +18,11 @@ public class Spike : MonoBehaviour
     void Update()
     {
         if(!up && transform.position.y <= posY_original) {
-            transform.position += new Vector3 (0, 0.15f, 0);
+            transform.position += new Vector3 (0, speed, 0);
             if(transform.position.y >= posY_original) up = true;
         }
         if(up && transform.position.y > posY_original - 1.65) {
-            transform.position += new Vector3 (0, -0.15f, 0);
+            transform.position += new Vector3 (0, -speed, 0);
             if(transform.position.y <= posY_original - 1.65) up = false;
         }
         
@@ -29,7 +31,7 @@ public class Spike : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")){
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(30.0f);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(damage);
         }
     }
 }

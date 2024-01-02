@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TeletransportUp : MonoBehaviour
@@ -33,6 +34,7 @@ public class TeletransportUp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && tp_active)
         {
             Player.transform.position = Target.transform.position;
+            if (Mathf.Abs(transform.position.y - Target.transform.position.y) > 5f) Player.GetComponent<LevelCounter>()?.addLevel();
             Physics.SyncTransforms();
             text.SetActive(false);
         }
