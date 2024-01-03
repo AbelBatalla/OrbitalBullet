@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.UIElements;
-using static Unity.VisualScripting.Member;
-using static UnityEngine.GraphicsBuffer;
 
 public class Flyer : MonoBehaviour
 {
@@ -32,8 +26,9 @@ public class Flyer : MonoBehaviour
             Debug.Log("playerFound");
             playerScript = Player.GetComponent<LevelCounter>();
             if (playerScript == null) Debug.Log("SCRIPT NOT FOUND");
-
         }
+        CheckDistance();
+
     }
 
     // Update is called once per frame
@@ -54,10 +49,11 @@ public class Flyer : MonoBehaviour
                     transform.RotateAround(Vector3.zero, Vector3.up, -2 * rotationSpeed * Time.deltaTime);
                 }
             }
-            else {
-                if (canShoot) {
+            else
+            {
+                if (canShoot)
+                {
                     canShoot = false;
-                    Debug.Log("Shooting");
                     if (bullet != null) Instantiate(bullet, shootPlace.position, shootPlace.rotation);
                     Invoke("resetShot", 2f);
                 }
@@ -66,10 +62,13 @@ public class Flyer : MonoBehaviour
         }
         else
         {
-            if (distanceX <= detectionRadius && playerScript.getLevel() == level)
+            if (playerScript.getLevel() == level)
             {
-                awake = true;
-                Debug.Log("awaken");
+                CheckDistance();
+                if (distanceX <= detectionRadius)
+                {
+                    awake = true;
+                }
             }
         }
     }
