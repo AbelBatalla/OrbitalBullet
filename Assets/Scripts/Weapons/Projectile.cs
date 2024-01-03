@@ -117,7 +117,6 @@ public class Projectile : MonoBehaviour
                 // Check if the normal of the contact point is approximately horizontal
                 if (Mathf.Abs(contact.normal.y) < tolerance) // 'tolerance' is a small value like 0.1
                 {
-                    Debug.Log("WALL");
                 
                     // Get current velocity
                     Vector3 currentVelocity = myRigidbody.velocity;

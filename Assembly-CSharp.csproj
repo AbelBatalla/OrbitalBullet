@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemies\FlyerRocket.cs" />
     <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
+    <Compile Include="Assets\Scripts\Enemies\CrawlerController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\Weapons\GrenadeRotate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Scripts\Weapons\AmmoIcon.cs" />
     <Compile Include="Assets\Scripts\Player\LevelCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\Scripts\Enemies\CrawlerAttackAndStomp.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Assets\Scripts\UI\healthBar.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponSlot.cs" />
+    <Compile Include="Assets\Ghoul\Assets\Scripts\AnkleGrabberExample.cs" />
     <Compile Include="Assets\Scripts\ChestAndItems\gunUpAndDown.cs" />
     <Compile Include="Assets\Scripts\Player\oldRecoil.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />

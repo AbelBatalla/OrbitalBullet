@@ -10,13 +10,11 @@ public class LevelCounter : MonoBehaviour
     void Start()
     {
         level = 0;
-        Debug.Log("Current Level: " + level);
     }
 
     public void addLevel()
     {
         level++;
-        Debug.Log("Current Level: " + level);
     }
 
     public int getLevel() { return level; }
