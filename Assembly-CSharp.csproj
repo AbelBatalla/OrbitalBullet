@@ -132,6 +132,7 @@
     <Compile Include="Assets\Scripts\UI\healthBar.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponSlot.cs" />
+    <Compile Include="Assets\Ghoul\Assets\Scripts\AnkleGrabberExample.cs" />
     <Compile Include="Assets\Scripts\ChestAndItems\gunUpAndDown.cs" />
     <Compile Include="Assets\Scripts\Player\oldRecoil.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />

@@ -13,10 +13,37 @@ public class Crawler : MonoBehaviour
     public float rotationSpeed = 15f;
     int status = 0; //0 idle, -1 move left, 1 move right;
     public float damage = 1f;
+    bool faceRight;
+    public Transform CrawlerBody;
+    public Animator anim;
+    int IdleOne;
+    int IdleAlert;
+    int Sleeps;
+    int AngryReaction;
+    int Hit;
+    int AnkleBite;
+    int CrochBite;
+    int Dies;
+    int HushLittleBaby;
+    int Run;
 
 
+    // Use this for initialization
     void Start()
     {
+        if (anim == null) Debug.Log("ANIMATOR NOT FOUND");
+        IdleOne = Animator.StringToHash("IdleOne");
+        IdleAlert = Animator.StringToHash("IdleAlert");
+        Sleeps = Animator.StringToHash("Sleeps");
+        AngryReaction = Animator.StringToHash("AngryReaction");
+        Hit = Animator.StringToHash("Hit");
+        AnkleBite = Animator.StringToHash("AnkleBite");
+        CrochBite = Animator.StringToHash("CrochBite");
+        Dies = Animator.StringToHash("Dies");
+        HushLittleBaby = Animator.StringToHash("HushLittleBaby");
+        Hit = Animator.StringToHash("Hit");
+        Run = Animator.StringToHash("Run");
+
         if (Player == null) Player = GameObject.FindGameObjectWithTag("Player");
         if (Player == null) Debug.Log("playerNotFound");
         else
@@ -51,10 +78,58 @@ public class Crawler : MonoBehaviour
                 transform.RotateAround(Vector3.zero, Vector3.up, -2 * rotationSpeed * Time.deltaTime);
             }
             transform.LookAt(Player.transform.position);
+
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
+            {
+                anim.SetBool(IdleAlert, false);
+                anim.SetBool(IdleOne, false);
+                anim.SetBool(Sleeps, false);
+                anim.SetBool(AngryReaction, false);
+                anim.SetBool(Hit, false);
+                anim.SetBool(AnkleBite, false);
+                anim.SetBool(CrochBite, false);
+                anim.SetBool(Dies, false);
+                anim.SetBool(HushLittleBaby, false);
+                anim.SetBool(Run, true);
+            }
         }
         else
         {
-            if (status != 0) transform.RotateAround(Vector3.zero, Vector3.up, status * rotationSpeed * 0.8f * Time.deltaTime);
+            if (status != 0)
+            {
+                transform.RotateAround(Vector3.zero, Vector3.up, status * rotationSpeed * 0.8f * Time.deltaTime);
+                if (status == -1) { CrawlerBody.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up,Vector3.zero - CrawlerBody.position)); }
+                else if (status == 1) { CrawlerBody.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.zero - CrawlerBody.position, Vector3.up)); }
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
+                {
+                    anim.SetBool(IdleAlert, false);
+                    anim.SetBool(IdleOne, false);
+                    anim.SetBool(Sleeps, false);
+                    anim.SetBool(AngryReaction, false);
+                    anim.SetBool(Hit, false);
+                    anim.SetBool(AnkleBite, false);
+                    anim.SetBool(CrochBite, false);
+                    anim.SetBool(Dies, false);
+                    anim.SetBool(HushLittleBaby, false);
+                    anim.SetBool(Run, true);
+                }
+            }
+            else {
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+                {
+                    anim.SetBool(IdleAlert, false);
+                    anim.SetBool(IdleOne, true);
+                    anim.SetBool(Sleeps, false);
+                    anim.SetBool(AngryReaction, false);
+                    anim.SetBool(Hit, false);
+                    anim.SetBool(AnkleBite, false);
+                    anim.SetBool(CrochBite, false);
+                    anim.SetBool(Dies, false);
+                    anim.SetBool(HushLittleBaby, false);
+                    anim.SetBool(Run, false);
+                }
+            }
+
         }
     }
 
