@@ -1,10 +1,12 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using UnityEngine.UIElements;
 
-public class Crawler : MonoBehaviour
+public class CrawlerController : MonoBehaviour
 {
     public GameObject Player;
     public float detectionRadius = 30f;
-    bool awake = false;
+    bool awake = true;
     float distanceX;
     float levelDifference = 5f;
     LevelCounter playerScript;
@@ -28,10 +30,13 @@ public class Crawler : MonoBehaviour
     int HushLittleBaby;
     int Run;
 
+    public CharacterController charControl;
 
     // Use this for initialization
     void Start()
     {
+        charControl = GetComponent<CharacterController>();
+
         if (anim == null) Debug.Log("ANIMATOR NOT FOUND");
         IdleOne = Animator.StringToHash("IdleOne");
         IdleAlert = Animator.StringToHash("IdleAlert");
@@ -58,29 +63,48 @@ public class Crawler : MonoBehaviour
     }
 
     // Update is called once per frame
+    
     void Update()
     {
-        CheckDistance();
-        //if (distanceX <= detectionRadius) awake = true;
-        //else awake = false;
-        awake = distanceX <= detectionRadius;
-
+        if (playerScript.getLevel() == level)
+        {
+            CheckDistance();
+            awake = distanceX <= detectionRadius;
+        }
 
         if (awake)
         {
             float oldDist = distanceX;
-            transform.RotateAround(Vector3.zero, Vector3.up, rotationSpeed * Time.deltaTime);
+
+            Vector3 position = transform.position;
+            float angle = rotationSpeed * Time.deltaTime;
+            Vector3 target = Quaternion.AngleAxis(angle, Vector3.up) * position;
+            if (charControl.Move(target - position) != CollisionFlags.None)
+            {
+                Physics.SyncTransforms();
+            }
+
             Vector3 enemyPositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
             Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
             float newDist = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
-            CrawlerBody.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.zero - CrawlerBody.position, Vector3.up));
-        if (Mathf.Abs(oldDist) < Mathf.Abs(newDist))
-            {
-                transform.RotateAround(Vector3.zero, Vector3.up, -2 * rotationSpeed * Time.deltaTime);
-                CrawlerBody.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up, Vector3.zero - CrawlerBody.position));
-            }
-            //transform.LookAt(Player.transform.position);
 
+            if (Mathf.Abs(oldDist) < Mathf.Abs(newDist))
+            {
+                position = transform.position;
+                angle = rotationSpeed * Time.deltaTime;
+                target = Quaternion.AngleAxis(-2*angle, Vector3.up) * position;
+                if (charControl.Move(target - position) != CollisionFlags.None)
+                {
+                    Physics.SyncTransforms();
+                }
+            }
+
+            //Face Player
+            Vector3 directionPl = (Player.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionPl.x, 0, directionPl.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+            //Animation
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
             {
                 anim.SetBool(IdleAlert, false);
@@ -95,13 +119,21 @@ public class Crawler : MonoBehaviour
                 anim.SetBool(Run, true);
             }
         }
+        
         else
         {
             if (status != 0)
             {
-                transform.RotateAround(Vector3.zero, Vector3.up, status * rotationSpeed * 0.8f * Time.deltaTime);
-                if (status == -1) { CrawlerBody.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up,Vector3.zero - CrawlerBody.position)); }
-                else if (status == 1) { CrawlerBody.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.zero - CrawlerBody.position, Vector3.up)); }
+                Vector3 position = transform.position;
+                float angle = rotationSpeed * Time.deltaTime;
+                Vector3 target = Quaternion.AngleAxis(status*angle*0.7f, Vector3.up) * position;
+                if (charControl.Move(target - position) != CollisionFlags.None)
+                {
+                    Physics.SyncTransforms();
+                }
+
+                if (status == -1) { transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up, Vector3.zero - CrawlerBody.position)); }
+                else { transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.zero - CrawlerBody.position, Vector3.up)); }
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
                 {
                     anim.SetBool(IdleAlert, false);
@@ -116,7 +148,8 @@ public class Crawler : MonoBehaviour
                     anim.SetBool(Run, true);
                 }
             }
-            else {
+            else
+            {
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run"))
                 {
                     anim.SetBool(IdleAlert, false);
@@ -131,7 +164,7 @@ public class Crawler : MonoBehaviour
                     anim.SetBool(Run, false);
                 }
             }
-
+        
         }
     }
 
@@ -143,23 +176,24 @@ public class Crawler : MonoBehaviour
         distanceX = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
     }
 
-    private void randomizeIdle() {
+    private void randomizeIdle()
+    {
         status = Random.Range(0, 3) - 1;
         float time = Random.Range(1.5f, 2.5f);
         Invoke("randomizeIdle", time);
     }
 
-    
+
     private void OnCollisionEnter(Collision collision)
     {
-        
+
         if (collision.collider.CompareTag("Player"))
         {
             attack();
         }
         else if (collision.collider.CompareTag("Map"))
         {
-            
+
             foreach (ContactPoint contact in collision.contacts)
             {
                 // Check if the normal of the contact point is approximately horizontal

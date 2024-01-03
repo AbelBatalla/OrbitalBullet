@@ -23,7 +23,6 @@ public class Flyer : MonoBehaviour
         if (Player == null) Debug.Log("playerNotFound");
         else
         {
-            Debug.Log("playerFound");
             playerScript = Player.GetComponent<LevelCounter>();
             if (playerScript == null) Debug.Log("SCRIPT NOT FOUND");
         }

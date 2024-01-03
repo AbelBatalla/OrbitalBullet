@@ -16,7 +16,6 @@ public class TeletransportUp : MonoBehaviour
         {
             text.SetActive(true);
             tp_active = true;
-            Debug.Log("Active");
         }
     }
 

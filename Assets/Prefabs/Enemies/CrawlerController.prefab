@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3632784685388352933}
-  - component: {fileID: 8429344000491484459}
+  - component: {fileID: 7874738040257046668}
+  - component: {fileID: 3656793594755945016}
   m_Layer: 3
-  m_Name: Crawler
+  m_Name: CrawlerController
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 2321079207748425459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8429344000491484459
+--- !u!114 &7874738040257046668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,16 +44,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 1763423657681829168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 729dcc7c6f24d2b47a3ebef0b8061207, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e57340a719fb454b8ad5d7d7955e782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  detectionRadius: 25
+  detectionRadius: 30
   level: 0
-  rotationSpeed: 20
+  rotationSpeed: 25
   damage: 1
   CrawlerBody: {fileID: 4993287583568590500}
   anim: {fileID: 4906420780060094610}
+  charControl: {fileID: 0}
+--- !u!143 &3656793594755945016
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763423657681829168}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 6
+  m_Radius: 3
+  m_SlopeLimit: 45
+  m_StepOffset: 5
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1001 &4991671635666753538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4013757813894822, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4013757813894822, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
       propertyPath: m_LocalRotation.x
@@ -95,7 +123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4013757813894822, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4013757813894822, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
       propertyPath: m_LocalRotation.z
@@ -215,8 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9faae64ba78e2d04e9dec57b5115b9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider1: {fileID: 5884744474597073367}
-  collider2: {fileID: 6298383268817251030}
   player: {fileID: 0}
 --- !u!4 &4993287583568590500 stripped
 Transform:

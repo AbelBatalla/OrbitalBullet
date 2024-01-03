@@ -36,7 +36,6 @@ public class BulletBehaviour : MonoBehaviour
         }
         else if (collision.collider.CompareTag("Enemy"))
         {
-            Debug.Log("Hit Enemy");
             Enemy enemyScript = collision.collider.GetComponent<Enemy>();
             if (enemyScript != null) enemyScript.takeDamage(damage);
             else Debug.Log("Null Component");
@@ -52,7 +51,6 @@ public class BulletBehaviour : MonoBehaviour
         life = lifeValue;
         ySpread = (rotateRight ? 1 : -1) * ySpreadValue;
         Invoke("StopRender", life);
-        Debug.Log("Bullet Created with values: ySpread: " + ySpread + "speed: " + rotationSpeed + "life: " + life);
         myRenderer = GetComponent<MeshRenderer>();
         myLight = GetComponent<Light>();
         mySphereCollider = GetComponent<SphereCollider>();
