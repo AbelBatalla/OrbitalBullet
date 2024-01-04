@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
             anim.SetBool("Death",true);
             gameOver_menu.SetActive(true);
         }
-        if(playerObject.transform.position.y < 0) TakeDamage(100f);
+        if(playerObject.transform.position.y < -10f) TakeDamage(100f);
     }
 
     public void TakeDamage(float damage)
