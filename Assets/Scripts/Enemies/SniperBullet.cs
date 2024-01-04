@@ -31,7 +31,6 @@ public class SniperBullet : MonoBehaviour
     {
         if (!stop && other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("HitPLayer");
             PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
             if (player != null) player.TakeDamage(damage);
             else Debug.Log("Null Component");

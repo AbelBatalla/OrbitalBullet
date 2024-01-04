@@ -11,6 +11,10 @@ public class PlayerHealth : MonoBehaviour
     Animator anim;
     GameObject playerObject = null;
     bool god_mode = false;
+    public AudioClip deathAudio;
+    public AudioClip hitAudio;
+    private AudioSource audioPlayer;
+    bool dead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,8 @@ public class PlayerHealth : MonoBehaviour
         gameOver_menu.SetActive(false);
         playerObject = GameObject.Find("T-Pose_new");
         anim = playerObject.GetComponentInChildren<Animator>();
+        audioPlayer = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -35,13 +41,22 @@ public class PlayerHealth : MonoBehaviour
         if(health <= 0) {
             anim.SetBool("Death",true);
             gameOver_menu.SetActive(true);
+            if (!dead)
+            {
+                audioPlayer.PlayOneShot(deathAudio);
+                dead = true;
+            }
         }
         if(playerObject.transform.position.y < -10f) TakeDamage(100f);
     }
 
     public void TakeDamage(float damage)
     {
-        if(anim.GetBool("Slide") == false && !god_mode) health -= damage;
+        if (anim.GetBool("Slide") == false && !god_mode)
+        {
+            health -= damage;
+            if (!dead) audioPlayer.PlayOneShot(hitAudio);
+        }
     }
 
 

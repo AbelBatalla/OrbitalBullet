@@ -8,13 +8,18 @@ public class Enemy : MonoBehaviour
     public float health;
     public float maxShield = 50;
     public float shield;
-    public bool deathAnim = false;
+    public int deathAnim = 0; //0=false, 1=Crawler, 2=Sniper, 3=Flyer
     private bool dead = false;
-    // Start is called before the first frame update
+    private Sniper sniperScript;
+    private Flyer flyerScript;
+    private CrawlerController crawlerScript;
     void Start()
     {
         health = maxHealth;
         shield = maxShield;
+        if (deathAnim == 1) crawlerScript = GetComponentInParent<CrawlerController>();
+        else if (deathAnim == 2) sniperScript = GetComponentInParent<Sniper>();
+        else if (deathAnim == 3) flyerScript = GetComponentInParent<Flyer>();
     }
 
     // Update is called once per frame
@@ -26,17 +31,33 @@ public class Enemy : MonoBehaviour
         }
         if (health <= 0)
         {
-            if (!deathAnim) Destroy(transform.parent.gameObject);
+            if (deathAnim == 0) Destroy(transform.parent.gameObject);
             else if (!dead)
             {
                 dead = true;
-                GetComponentInParent<CrawlerController>()?.death();
-                GetComponent<BoxCollider>().enabled = false;
+                if (deathAnim == 1)
+                {
+                    crawlerScript.death();
+                    GetComponent<BoxCollider>().enabled = false;
+                }
+                else if (deathAnim == 2)
+                {
+                    sniperScript.death();
+                    Destroy(gameObject);
+                }
+                else if (deathAnim == 3)
+                {
+                    flyerScript.death();
+                    Destroy(gameObject);
+                }
             }
         }
     }
 
-    public void takeDamage(float damage) { 
+    public void takeDamage(float damage) {
+        if (deathAnim == 1) crawlerScript.hit();
+        else if (deathAnim == 2) sniperScript.hit();
+        else if (deathAnim == 3) flyerScript.hit();
         shield -= damage;
         if (shield < 0) {
             health += shield;
