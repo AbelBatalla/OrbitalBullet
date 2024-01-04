@@ -8,6 +8,8 @@ public class BossController : MonoBehaviour
     bool awake = false;
     private LevelCounter level_counter;
 
+    GunBoss gunBoss;
+
     Vector3 startDirection;
 
     public GameObject Player;
@@ -25,29 +27,41 @@ public class BossController : MonoBehaviour
 
     float lastTime_attack = 0.0f;
 
+    public GameObject bullet;
+
+    bool canShoot = true;
+
+    bool dead = false;
+
+    public Transform shootPlace;
+
     
 
-    float frontierMoveOrStay = 10f;
+    float frontierMoveOrStay = 20f;
     // Start is called before the first frame update
     void Start()
     {
         level_counter = Player.GetComponent<LevelCounter>();
         anim = gameObject.GetComponentInChildren<Animator>();
+        gunBoss = gameObject.GetComponent<GunBoss>();
+        Debug.Log(gunBoss);
         startDirection = transform.position - transform.parent.position;
         startDirection.y = 0.0f;
         startDirection.x = 95.0f;
         startDirection.Normalize();
+        
         
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (awake)
+        dead = anim.GetBool("killed");
+        if(Input.GetKeyDown(KeyCode.K)) gameObject.GetComponent<GunBoss>().Shoot();
+        if (awake && !dead)
         {
             CheckDistance();
-            if (Mathf.Abs(distanceX) > frontierMoveOrStay)
+            if (Mathf.Abs(distanceX) > frontierMoveOrStay && !attacking)
             {
                 float oldDist = distanceX;
                 transform.RotateAround(Vector3.zero, Vector3.up, rotationSpeed * Time.deltaTime);
@@ -78,7 +92,6 @@ public class BossController : MonoBehaviour
                 if(lastTime_attack != 0) lastTime_attack += Time.deltaTime;
                 if(lastTime_attack >= 10.0f){
                     lastTime_attack = 0;
-                    //anim.SetBool("attack", false);
                     attacking = false;
                 } 
                 else if(lastTime_attack >= 3.0f) anim.SetBool("attack", false);
@@ -89,6 +102,9 @@ public class BossController : MonoBehaviour
                         lastTime_attack = Time.deltaTime;
                         Debug.Log(lastTime_attack);
                         attacking = true;
+                        gameObject.GetComponent<GunBoss>().Shoot();
+                        gameObject.GetComponent<GunBoss>().Shoot();
+                        
                     } 
                 }
                 anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);
@@ -136,5 +152,9 @@ private void CheckDistance()
         distanceX = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
         distanceY = Mathf.Abs(transform.position.y - Player.transform.position.y);
     }
+
+
+
+
     
 }

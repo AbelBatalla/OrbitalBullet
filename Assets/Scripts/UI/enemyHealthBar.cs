@@ -33,6 +33,8 @@ public class enemyHealthBar : MonoBehaviour
             shieldSlider.value = playerHealth.shield;
         }
 
+        
+
         if (healthSlider.value != easeHealthSlider.value)
         {
             easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, playerHealth.health, lerpSpeed);

@@ -22,9 +22,11 @@ public class Enemy : MonoBehaviour
         {
             takeDamage(10f);
         }
-        if (health <= 0) Destroy(transform.parent.gameObject);
+        if (health <= 0) {
+            Animator anim = gameObject.GetComponent<Animator>();
+            anim.SetBool("killed", true);
+        }
     }
-
     public void takeDamage(float damage) { 
         shield -= damage;
         if (shield < 0) {

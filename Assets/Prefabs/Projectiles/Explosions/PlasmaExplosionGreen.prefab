@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.4292453, b: 0.91627795, a: 1}
+      maxColor: {r: 0.4500344, g: 1, b: 0.427451, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5243,7 +5243,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.40043262, g: 0.9245283, b: 0.3794055, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9763,7 +9763,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78d26014b935cc54783077c54745e41c, type: 2}
+  - {fileID: 2100000, guid: 22e7546462be74fc5b3650467381599c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9828,7 +9828,7 @@ GameObject:
   - component: {fileID: 198000010585806678}
   - component: {fileID: 199000012270651464}
   m_Layer: 0
-  m_Name: PlasmaExplosionEffect
+  m_Name: PlasmaExplosionGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14602,7 +14602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000012936488424
 Transform:
   m_ObjectHideFlags: 0
@@ -19753,7 +19753,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.5801887, b: 0.9217338, a: 1}
+      maxColor: {r: 0.60632706, g: 1, b: 0.5803922, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
