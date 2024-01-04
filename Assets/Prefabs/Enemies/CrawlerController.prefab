@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3632784685388352933}
   - component: {fileID: 7874738040257046668}
   - component: {fileID: 3656793594755945016}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: CrawlerController
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  detectionRadius: 30
+  detectionRadius: 35
   level: 0
   rotationSpeed: 25
-  damage: 1
+  damage: 10
   CrawlerBody: {fileID: 4993287583568590500}
   anim: {fileID: 4906420780060094610}
+  verticalAttackRange: 2
+  attackCooldown: 1.5
   charControl: {fileID: 0}
 --- !u!143 &3656793594755945016
 CharacterController:
@@ -155,13 +157,7 @@ PrefabInstance:
       addedObject: {fileID: 6157115962276974298}
     - targetCorrespondingSourceObject: {fileID: 1363024495875198, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6298383268817251030}
-    - targetCorrespondingSourceObject: {fileID: 1363024495875198, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5884744474597073367}
-    - targetCorrespondingSourceObject: {fileID: 1363024495875198, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1285661795338856238}
+      addedObject: {fileID: 8376767468744244050}
   m_SourcePrefab: {fileID: 100100000, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}
 --- !u!95 &4906420780060094610 stripped
 Animator:
@@ -185,11 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260544863966467458c0999b41e5fcca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 80
+  maxHealth: 50
   health: 0
   maxShield: 0
   shield: 0
---- !u!65 &6298383268817251030
+  deathAnim: 1
+--- !u!65 &8376767468744244050
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,42 +205,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 2, z: 4}
+  m_Size: {x: 4, y: 3, z: 4}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!65 &5884744474597073367
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4990319675296107644}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.5, y: 1, z: 3.5}
-  m_Center: {x: 0, y: 2.5, z: 0}
---- !u!114 &1285661795338856238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4990319675296107644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9faae64ba78e2d04e9dec57b5115b9b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!4 &4993287583568590500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4013757813894822, guid: 656835c98f7180548bfc0a3c70bdbd94, type: 3}

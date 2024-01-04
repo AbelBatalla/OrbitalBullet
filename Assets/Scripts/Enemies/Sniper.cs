@@ -85,13 +85,10 @@ public class Sniper : MonoBehaviour
         }
         else
         {
-            if (playerScript.getLevel() == level)
+            CheckDistance();
+            if (distanceX <= detectionRadius)
             {
-                CheckDistance();
-                if (distanceX <= detectionRadius)
-                {
-                    awake = true;
-                }
+                awake = true;
             }
         }
     }

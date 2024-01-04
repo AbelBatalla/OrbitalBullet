@@ -8,13 +8,14 @@ public class CrawlerController : MonoBehaviour
     public float detectionRadius = 30f;
     bool awake = true;
     float distanceX;
+    float distanceY;
     float levelDifference = 5f;
     LevelCounter playerScript;
     PlayerHealth playerHealth;
     public int level = 0;
     public float rotationSpeed = 15f;
     int status = 0; //0 idle, -1 move left, 1 move right;
-    public float damage = 1f;
+    public float damage = 10f;
     bool faceRight;
     private float tolerance = 0.1f;
     public Transform CrawlerBody;
@@ -29,8 +30,14 @@ public class CrawlerController : MonoBehaviour
     int Dies;
     int HushLittleBaby;
     int Run;
-
+    public float verticalAttackRange = 2f;
+    public float attackCooldown = 1.5f;
+    private float timeSinceLastAttack = 0f;
+    private bool canAttack = true;
+    float frontierMoveOrStay = 2f;
     public CharacterController charControl;
+    Vector3 vel;
+    private bool alive = true;
 
     // Use this for initialization
     void Start()
@@ -59,81 +66,70 @@ public class CrawlerController : MonoBehaviour
             playerHealth = Player.GetComponent<PlayerHealth>();
             if (playerScript == null) Debug.Log("HEALTH SCRIPT NOT FOUND");
         }
+         vel = new Vector3(0, 0, 0);
         randomizeIdle();
     }
 
     // Update is called once per frame
-    
+
     void Update()
     {
-        if (playerScript.getLevel() == level)
+        if (alive)
         {
+            if (!canAttack)
+            {
+                timeSinceLastAttack += Time.deltaTime;
+                if (timeSinceLastAttack >= attackCooldown)
+                {
+                    canAttack = true;
+                    timeSinceLastAttack = 0f;
+                }
+            }
             CheckDistance();
             awake = distanceX <= detectionRadius;
-        }
 
-        if (awake)
-        {
-            float oldDist = distanceX;
-
-            Vector3 position = transform.position;
-            float angle = rotationSpeed * Time.deltaTime;
-            Vector3 target = Quaternion.AngleAxis(angle, Vector3.up) * position;
-            if (charControl.Move(target - position) != CollisionFlags.None)
+            if (awake)
             {
-                Physics.SyncTransforms();
-            }
-
-            Vector3 enemyPositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
-            Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
-            float newDist = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
-
-            if (Mathf.Abs(oldDist) < Mathf.Abs(newDist))
-            {
-                position = transform.position;
-                angle = rotationSpeed * Time.deltaTime;
-                target = Quaternion.AngleAxis(-2*angle, Vector3.up) * position;
-                if (charControl.Move(target - position) != CollisionFlags.None)
+                if (Mathf.Abs(distanceX) > frontierMoveOrStay)
                 {
-                    Physics.SyncTransforms();
+                    float oldDist = distanceX;
+                    Vector3 position = transform.position;
+                    float angle = rotationSpeed * Time.deltaTime;
+                    Vector3 target = Quaternion.AngleAxis(angle, Vector3.up) * position;
+                    if (charControl.Move(target - position) != CollisionFlags.None)
+                    {
+                        Physics.SyncTransforms();
+                    }
+
+                    Vector3 enemyPositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
+                    Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
+                    float newDist = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
+
+                    if (Mathf.Abs(oldDist) < Mathf.Abs(newDist))
+                    {
+                        position = transform.position;
+                        angle = rotationSpeed * Time.deltaTime;
+                        target = Quaternion.AngleAxis(-2 * angle, Vector3.up) * position;
+                        if (charControl.Move(target - position) != CollisionFlags.None)
+                        {
+                            Physics.SyncTransforms();
+                        }
+                    }
                 }
-            }
-
-            //Face Player
-            Vector3 directionPl = (Player.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionPl.x, 0, directionPl.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-            //Animation
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
-            {
-                anim.SetBool(IdleAlert, false);
-                anim.SetBool(IdleOne, false);
-                anim.SetBool(Sleeps, false);
-                anim.SetBool(AngryReaction, false);
-                anim.SetBool(Hit, false);
-                anim.SetBool(AnkleBite, false);
-                anim.SetBool(CrochBite, false);
-                anim.SetBool(Dies, false);
-                anim.SetBool(HushLittleBaby, false);
-                anim.SetBool(Run, true);
-            }
-        }
-        
-        else
-        {
-            if (status != 0)
-            {
-                Vector3 position = transform.position;
-                float angle = rotationSpeed * Time.deltaTime;
-                Vector3 target = Quaternion.AngleAxis(status*angle*0.7f, Vector3.up) * position;
-                if (charControl.Move(target - position) != CollisionFlags.None)
+                else
                 {
-                    Physics.SyncTransforms();
+                    if (canAttack && distanceY <= verticalAttackRange)
+                    {
+                        attack();
+                    }
                 }
 
-                if (status == -1) { transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up, Vector3.zero - CrawlerBody.position)); }
-                else { transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.zero - CrawlerBody.position, Vector3.up)); }
+                //Face Player
+                Vector3 directionPl = (Player.transform.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionPl.x, 0, directionPl.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+                //Animation
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
                 {
                     anim.SetBool(IdleAlert, false);
@@ -147,24 +143,84 @@ public class CrawlerController : MonoBehaviour
                     anim.SetBool(HushLittleBaby, false);
                     anim.SetBool(Run, true);
                 }
+
+                // Apply gravity
+                if (charControl.isGrounded)
+                {
+                    vel.y = 0f; // Reset gravity effect when on the ground
+                }
+                else
+                {
+                    vel.y -= 20f * Time.deltaTime; // Apply gravity over time
+                }
+
+                // Move the character controller with the gravity effect
+                charControl.Move(vel * Time.deltaTime);
+
             }
+
             else
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+                if (status != 0)
                 {
-                    anim.SetBool(IdleAlert, false);
-                    anim.SetBool(IdleOne, true);
-                    anim.SetBool(Sleeps, false);
-                    anim.SetBool(AngryReaction, false);
-                    anim.SetBool(Hit, false);
-                    anim.SetBool(AnkleBite, false);
-                    anim.SetBool(CrochBite, false);
-                    anim.SetBool(Dies, false);
-                    anim.SetBool(HushLittleBaby, false);
-                    anim.SetBool(Run, false);
+                    Vector3 position = transform.position;
+                    float angle = rotationSpeed * Time.deltaTime;
+                    Vector3 target = Quaternion.AngleAxis(status * angle * 0.7f, Vector3.up) * position;
+                    if (charControl.Move(target - position) != CollisionFlags.None)
+                    {
+                        Physics.SyncTransforms();
+                    }
+
+                    if (status == -1) { transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up, Vector3.zero - CrawlerBody.position)); }
+                    else { transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.zero - CrawlerBody.position, Vector3.up)); }
+                    if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
+                    {
+                        anim.SetBool(IdleAlert, false);
+                        anim.SetBool(IdleOne, false);
+                        anim.SetBool(Sleeps, false);
+                        anim.SetBool(AngryReaction, false);
+                        anim.SetBool(Hit, false);
+                        anim.SetBool(AnkleBite, false);
+                        anim.SetBool(CrochBite, false);
+                        anim.SetBool(Dies, false);
+                        anim.SetBool(HushLittleBaby, false);
+                        anim.SetBool(Run, true);
+                    }
                 }
+                else
+                {
+                    if (anim.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+                    {
+                        anim.SetBool(IdleAlert, false);
+                        anim.SetBool(IdleOne, true);
+                        anim.SetBool(Sleeps, false);
+                        anim.SetBool(AngryReaction, false);
+                        anim.SetBool(Hit, false);
+                        anim.SetBool(AnkleBite, false);
+                        anim.SetBool(CrochBite, false);
+                        anim.SetBool(Dies, false);
+                        anim.SetBool(HushLittleBaby, false);
+                        anim.SetBool(Run, false);
+                    }
+                }
+
             }
-        
+        }
+        else
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("IdleOne"))
+            {
+                anim.SetBool(IdleAlert, false);
+                anim.SetBool(IdleOne, false);
+                anim.SetBool(Sleeps, false);
+                anim.SetBool(AngryReaction, false);
+                anim.SetBool(Hit, false);
+                anim.SetBool(AnkleBite, false);
+                anim.SetBool(CrochBite, false);
+                anim.SetBool(Dies, true);
+                anim.SetBool(HushLittleBaby, false);
+                anim.SetBool(Run, false);
+            }
         }
     }
 
@@ -174,6 +230,7 @@ public class CrawlerController : MonoBehaviour
         Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
 
         distanceX = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
+        distanceY = Mathf.Abs(transform.position.y - Player.transform.position.y);
     }
 
     private void randomizeIdle()
@@ -183,31 +240,27 @@ public class CrawlerController : MonoBehaviour
         Invoke("randomizeIdle", time);
     }
 
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.collider.CompareTag("Player"))
-        {
-            attack();
-        }
-        else if (collision.collider.CompareTag("Map"))
-        {
-
-            foreach (ContactPoint contact in collision.contacts)
-            {
-                // Check if the normal of the contact point is approximately horizontal
-                if (Mathf.Abs(contact.normal.y) < tolerance) // 'tolerance' is a small value like 0.1
-                {
-                    Debug.Log("COLLISION WITH WALL");
-                    status = status * -1;
-                    break;
-                }
-            }
-        }
-    }
     private void attack()
     {
         if (playerHealth != null) playerHealth.TakeDamage(damage);
+        canAttack = false;
+    }
+
+    public void death()
+    {
+        alive = false;
+        anim.SetBool(IdleAlert, false);
+        anim.SetBool(IdleOne, true);
+        anim.SetBool(Sleeps, false);
+        anim.SetBool(AngryReaction, false);
+        anim.SetBool(Hit, false);
+        anim.SetBool(AnkleBite, false);
+        anim.SetBool(CrochBite, false);
+        anim.SetBool(Dies, false);
+        anim.SetBool(HushLittleBaby, false);
+        anim.SetBool(Run, false);
+        Debug.Log("animationSet");
+        charControl.enabled = false;
+        Destroy(gameObject, 2f);
     }
 }

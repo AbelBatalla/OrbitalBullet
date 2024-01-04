@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     public float health;
     public float maxShield = 50;
     public float shield;
+    public bool deathAnim = false;
+    private bool dead = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,16 @@ public class Enemy : MonoBehaviour
         {
             takeDamage(10f);
         }
-        if (health <= 0) Destroy(transform.parent.gameObject);
+        if (health <= 0)
+        {
+            if (!deathAnim) Destroy(transform.parent.gameObject);
+            else if (!dead)
+            {
+                dead = true;
+                GetComponentInParent<CrawlerController>()?.death();
+                GetComponent<BoxCollider>().enabled = false;
+            }
+        }
     }
 
     public void takeDamage(float damage) { 
