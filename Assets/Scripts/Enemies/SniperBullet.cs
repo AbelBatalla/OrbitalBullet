@@ -11,6 +11,7 @@ public class SniperBullet : MonoBehaviour
     private float life = 1.5f;
     bool stop = false;
     private float damage = 20f;
+    private float height = 2f;
     private bool rotateRight;
     private Renderer myRenderer;
     private Light myLight;
@@ -22,32 +23,30 @@ public class SniperBullet : MonoBehaviour
         if (!stop)
         {
             transform.RotateAround(Vector3.zero, rotationAxis, (rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime);
-            transform.Translate(Vector3.forward * 0.5f * Time.deltaTime);
+            transform.Translate(Vector3.forward * height * Time.deltaTime);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-
-        if (collision.collider.CompareTag("Map"))
+        if (!stop && other.gameObject.CompareTag("Player"))
         {
-            //Instantiate(bulletCollision, collision.contacts[0].point, Quaternion.Euler(0, 180, 0));
-        }
-        else if (collision.collider.CompareTag("Player"))
-        {
-            PlayerHealth player = collision.collider.GetComponent<PlayerHealth>();
+            Debug.Log("HitPLayer");
+            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
             if (player != null) player.TakeDamage(damage);
             else Debug.Log("Null Component");
+            StopRender();
         }
-        StopRender();
+        
     }
 
-    public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float lifeValue, float damageValue)
+    public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float lifeValue, float damageValue, float heightValue)
     {
         damage = damageValue;
         rotationSpeed = rotationSpeedValue;
         rotateRight = rotateRightValue;
         life = lifeValue;
+        height = heightValue;
         Invoke("StopRender", life);
         myRenderer = GetComponent<MeshRenderer>();
         myLight = GetComponent<Light>();

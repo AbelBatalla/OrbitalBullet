@@ -138,6 +138,7 @@ MonoBehaviour:
   health: 0
   maxShield: 20
   shield: 0
+  deathAnim: 0
 --- !u!65 &1110395552676734784
 BoxCollider:
   m_ObjectHideFlags: 0

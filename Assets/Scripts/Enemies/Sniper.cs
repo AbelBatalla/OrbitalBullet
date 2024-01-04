@@ -78,7 +78,7 @@ public class Sniper : MonoBehaviour
                     canShoot = false;
                     var bulletActual = Instantiate(bullet, shootPlace.position, Quaternion.Euler(90f, shootPlace.eulerAngles.y, 0f));
                     SniperBullet bulletScript = bulletActual.GetComponent<SniperBullet>();
-                    bulletScript.InitializeBullet(bulletRotationSpeed, lookRight, life, damage);
+                    bulletScript.InitializeBullet(bulletRotationSpeed, lookRight, life, damage, 300f/distanceX);
                     Invoke("resetShot", 2f);
                 }
             }
