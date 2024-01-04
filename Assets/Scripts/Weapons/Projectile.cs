@@ -13,12 +13,13 @@ public class Projectile : MonoBehaviour
     public Renderer myRenderer;
     private Light myLight;
     private SphereCollider mySphereCollider;
-    private float tolerance = 0.4f;
+    private float tolerance = 0.9f;
 
     //Assignables
     private Rigidbody myRigidbody;
     public GameObject explosion;
     public LayerMask whatIsEnemies;
+    public LayerMask whatIsPlayer;
 
     //Stats
     [Range(0f, 1f)]
@@ -78,6 +79,13 @@ public class Projectile : MonoBehaviour
         {
             Enemy enemyScript = enemies[i].GetComponent<Enemy>();
             if (enemyScript != null) enemyScript.takeDamage(explosionDamage);
+            else Debug.Log("Null Component");
+        }
+        Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, whatIsPlayer);
+        for (int i = 0; i < players.Length; i++)
+        {
+            PlayerHealth healthScript = players[i].GetComponent<PlayerHealth>();
+            if (healthScript != null) healthScript.TakeDamage(explosionDamage/4);
             else Debug.Log("Null Component");
         }
         StopRender();

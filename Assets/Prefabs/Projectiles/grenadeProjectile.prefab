@@ -336,6 +336,9 @@ MonoBehaviour:
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 8
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
   bounciness: 0.65
   useGravity: 1
   explosionRange: 2.5
