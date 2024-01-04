@@ -211,8 +211,6 @@ public class MovePlayer : MonoBehaviour
 
         if (charControl.Move(target - position) != CollisionFlags.None)
         {
-
-            Debug.Log(position);
             transform.position = position;
             Physics.SyncTransforms();
 

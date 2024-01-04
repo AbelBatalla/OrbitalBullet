@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Flyer : MonoBehaviour
 {
@@ -15,8 +16,10 @@ public class Flyer : MonoBehaviour
     public int level = 0;
     public float rotationSpeed = 15f;
     bool canShoot = true;
-
-
+    private bool alive = true;
+    public AudioClip deathAudio;
+    public AudioClip hitAudio;
+    private AudioSource audioPlayer;
     void Start()
     {
         if (Player == null) Player = GameObject.FindGameObjectWithTag("Player");
@@ -26,6 +29,7 @@ public class Flyer : MonoBehaviour
             playerScript = Player.GetComponent<LevelCounter>();
             if (playerScript == null) Debug.Log("SCRIPT NOT FOUND");
         }
+        audioPlayer = GetComponent<AudioSource>();
         CheckDistance();
 
     }
@@ -33,35 +37,35 @@ public class Flyer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (awake)
+        if (alive)
         {
-            CheckDistance();
-            if (Mathf.Abs(distanceX) > frontierMoveOrStay)
+            if (awake)
             {
-                float oldDist = distanceX;
-                transform.RotateAround(Vector3.zero, Vector3.up, rotationSpeed * Time.deltaTime);
-                Vector3 enemyPositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
-                Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
-                float newDist = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
-                if (Mathf.Abs(oldDist) < Mathf.Abs(newDist))
+                CheckDistance();
+                if (Mathf.Abs(distanceX) > frontierMoveOrStay)
                 {
-                    transform.RotateAround(Vector3.zero, Vector3.up, -2 * rotationSpeed * Time.deltaTime);
+                    float oldDist = distanceX;
+                    transform.RotateAround(Vector3.zero, Vector3.up, rotationSpeed * Time.deltaTime);
+                    Vector3 enemyPositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
+                    Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
+                    float newDist = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
+                    if (Mathf.Abs(oldDist) < Mathf.Abs(newDist))
+                    {
+                        transform.RotateAround(Vector3.zero, Vector3.up, -2 * rotationSpeed * Time.deltaTime);
+                    }
                 }
+                else
+                {
+                    if (canShoot)
+                    {
+                        canShoot = false;
+                        if (bullet != null) Instantiate(bullet, shootPlace.position, shootPlace.rotation);
+                        Invoke("resetShot", 2f);
+                    }
+                }
+                transform.LookAt(Player.transform.position);
             }
             else
-            {
-                if (canShoot)
-                {
-                    canShoot = false;
-                    if (bullet != null) Instantiate(bullet, shootPlace.position, shootPlace.rotation);
-                    Invoke("resetShot", 2f);
-                }
-            }
-            transform.LookAt(Player.transform.position);
-        }
-        else
-        {
-            if (playerScript.getLevel() == level)
             {
                 CheckDistance();
                 if (distanceX <= detectionRadius)
@@ -82,4 +86,16 @@ public class Flyer : MonoBehaviour
     }
 
     private void resetShot() { canShoot = true; }
+
+    public void death()
+    {
+        alive = false;
+        audioPlayer.PlayOneShot(deathAudio);
+        Destroy(gameObject, 2f);
+    }
+
+    public void hit()
+    {
+        audioPlayer.PlayOneShot(hitAudio);
+    }
 }
