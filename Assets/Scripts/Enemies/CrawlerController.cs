@@ -38,11 +38,15 @@ public class CrawlerController : MonoBehaviour
     public CharacterController charControl;
     Vector3 vel;
     private bool alive = true;
+    public AudioClip deathAudio;
+    public AudioClip hitAudio;
+    private AudioSource audioPlayer;
 
     // Use this for initialization
     void Start()
     {
         charControl = GetComponent<CharacterController>();
+        audioPlayer = GetComponent<AudioSource>();
 
         if (anim == null) Debug.Log("ANIMATOR NOT FOUND");
         IdleOne = Animator.StringToHash("IdleOne");
@@ -259,8 +263,12 @@ public class CrawlerController : MonoBehaviour
         anim.SetBool(Dies, false);
         anim.SetBool(HushLittleBaby, false);
         anim.SetBool(Run, false);
-        Debug.Log("animationSet");
         charControl.enabled = false;
+        audioPlayer.PlayOneShot(deathAudio);
         Destroy(gameObject, 2f);
+    }
+    public void hit()
+    {
+        audioPlayer.PlayOneShot(hitAudio);
     }
 }
