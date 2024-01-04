@@ -25,7 +25,7 @@ public class GunItem : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                if (Input.GetKey(KeyCode.E))
+                if (Input.GetKey(KeyCode.R))
                 {
                     other.gameObject.GetComponent<InventoryController>()?.getWeapon(itemCode);
                     this.gameObject.SetActive(false);
