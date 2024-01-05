@@ -95,6 +95,8 @@ MonoBehaviour:
       weight: 2
     - item: {fileID: 8374210727577250327, guid: daabc1dcb8dd4de47835ab7af7fe773c, type: 3}
       weight: 2
+    - item: {fileID: 8374210727577250327, guid: 9c9470f2167c19d4eba06b71553093c3, type: 3}
+      weight: 2
   itemHolder: {fileID: 4501866326342413694}
   animator: {fileID: 3250866924255167394}
   killsCounter: {fileID: 0}
