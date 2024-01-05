@@ -3,66 +3,37 @@
 public class Chest : MonoBehaviour
 {
     public WeightedRandomList<Transform> lootTable;
-
     public Transform itemHolder;
-
-    bool open, active;
-
+    bool open;
     public animatorScript animator;
-
     public KillsCounter killsCounter;
+    public AudioClip openAudio;
+    private AudioSource audioPlayer;
 
     void Start()
     {
         open = false;
-        active = true;
         killsCounter = GameObject.FindWithTag("KillsCanvas").GetComponent<KillsCounter>();
+        audioPlayer = GetComponent<AudioSource>();
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (active)
+        if (other.gameObject.tag == "Player")
         {
-            if (other.gameObject.tag == "Player")
+            if (!open && Input.GetKey(KeyCode.T) && killsCounter?.getSouls()>0)
             {
-                if (Input.GetKey(KeyCode.T) && killsCounter?.getSouls()>0)
-                {
-                    if (open)
-                    {
-                        HideItem();
-                    }
-                    else
-                    {
-                        if (animator != null) animator.activa();
-                        killsCounter?.consumeSoul();
-                        Invoke("ShowItem", 0.7f);
-                    }
-                    active = false;
-                    Invoke("activate", 2f);
-                }
+                open = true;
+                if (animator != null) animator.activa();
+                audioPlayer.PlayOneShot(openAudio);
+                killsCounter?.consumeSoul();
+                Invoke("ShowItem", 0.7f);
             }
         }
-    }
-    private void activate()
-    {
-        active = true;
-    }
-
-    void HideItem()
-    {
-        open = false;
-        //itemHolder.localScale = Vector3.zero;
-        foreach (Transform child in itemHolder)
-        {
-            Destroy(child.gameObject);
-            Debug.Log("Destroying");
-        }
-        itemHolder.gameObject.SetActive(false);
     }
 
     void ShowItem()
     {
-        open = true;
         Transform item = lootTable.GetRandom();
         Instantiate(item, itemHolder);
         itemHolder.gameObject.SetActive(true);
