@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
     bool god_mode = false;
     public AudioClip deathAudio;
     public AudioClip hitAudio;
+    public AudioClip regenAudio;
     private AudioSource audioPlayer;
     bool dead = false;
     bool poisoned = false;
@@ -34,6 +35,10 @@ public class PlayerHealth : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             TakeDamage(10f);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            giveHealth();
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -73,6 +78,11 @@ public class PlayerHealth : MonoBehaviour
             health -= damage;
             if (!dead) audioPlayer.PlayOneShot(hitAudio);
         }
+    }
+
+    public void giveHealth() {
+        health = maxHealth;
+        audioPlayer.PlayOneShot(regenAudio);
     }
 
 
