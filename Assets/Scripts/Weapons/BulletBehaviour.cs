@@ -38,7 +38,11 @@ public class BulletBehaviour : MonoBehaviour
         {
             Enemy enemyScript = collision.collider.GetComponent<Enemy>();
             if (enemyScript != null) enemyScript.takeDamage(damage);
-            else Debug.Log("Null Component");
+            else { //Boss Case
+                bossDamage bossScript = collision.collider.GetComponent<bossDamage>();
+                if (bossScript != null) bossScript.takeDamage(damage);
+                else Debug.Log("Null Component");
+            } 
         }      
         StopRender();
     }

@@ -88,6 +88,15 @@ public class Projectile : MonoBehaviour
             if (healthScript != null) healthScript.TakeDamage(explosionDamage/4);
             else Debug.Log("Null Component");
         }
+
+        Collider[] boss = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
+        for (int i = 0; i < boss.Length; i++)
+        {
+            bossDamage bossScript = boss[i].GetComponent<bossDamage>();
+            if (bossScript != null) bossScript.takeDamage(explosionDamage);
+            else Debug.Log("Null Component");
+        }
+
         StopRender();
     }
 
