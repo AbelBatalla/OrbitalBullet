@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25662318, g: 0.2475434, b: 0.3416076, a: 1}
+  m_IndirectSpecularColor: {r: 0.05536904, g: 0.0519673, b: 0.09782134, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1962,8 +1962,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 644849789}
-  Player: {fileID: 0}
-  text: {fileID: 0}
+  Player: {fileID: 1536372401}
+  text: {fileID: 114651393}
 --- !u!136 &262338658
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -30502,7 +30502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb350579e3224cd8b160a9cdb0ecbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.035
+  speed: 0.35
   damage: 20
 --- !u!136 &1105088316
 CapsuleCollider:
@@ -31078,7 +31078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb350579e3224cd8b160a9cdb0ecbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.035
+  speed: 0.35
   damage: 20
 --- !u!136 &1139456720
 CapsuleCollider:
@@ -39499,6 +39499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449e281454c463545870e95c82ccb7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 0}
 --- !u!114 &1420826316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62333,7 +62334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb350579e3224cd8b160a9cdb0ecbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.035
+  speed: 0.35
   damage: 20
 --- !u!64 &64269700770088448
 MeshCollider:
