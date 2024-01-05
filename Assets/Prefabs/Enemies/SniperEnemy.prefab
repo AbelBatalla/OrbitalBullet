@@ -58,6 +58,7 @@ MonoBehaviour:
   damage: 20
   deathAudio: {fileID: 8300000, guid: e932d045b85aee849a3ea9730a1cc7b0, type: 3}
   hitAudio: {fileID: 8300000, guid: 5197912a3882381469dcd5229269c601, type: 3}
+  shootAudio: {fileID: 8300000, guid: 189cb2abdc846944ab7dcd278ef24d3a, type: 3}
 --- !u!82 &5248817894154261973
 AudioSource:
   m_ObjectHideFlags: 0
@@ -238,6 +239,7 @@ MonoBehaviour:
   maxShield: 20
   shield: 0
   deathAnim: 2
+  killsCounter: {fileID: 0}
 --- !u!65 &1110395552676734784
 BoxCollider:
   m_ObjectHideFlags: 0

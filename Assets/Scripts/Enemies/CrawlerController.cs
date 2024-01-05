@@ -40,6 +40,7 @@ public class CrawlerController : MonoBehaviour
     private bool alive = true;
     public AudioClip deathAudio;
     public AudioClip hitAudio;
+    public AudioClip attackAudio;
     private AudioSource audioPlayer;
 
     // Use this for initialization
@@ -259,6 +260,7 @@ public class CrawlerController : MonoBehaviour
     {
         if (playerHealth != null) playerHealth.TakeDamage(damage);
         canAttack = false;
+        audioPlayer.PlayOneShot(attackAudio);
     }
 
     public void death()

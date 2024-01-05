@@ -22,6 +22,7 @@ public class Sniper : MonoBehaviour
     private bool alive = true;
     public AudioClip deathAudio;
     public AudioClip hitAudio;
+    public AudioClip shootAudio;
     private AudioSource audioPlayer;
 
     void Start()
@@ -83,6 +84,7 @@ public class Sniper : MonoBehaviour
                     if (canShoot)
                     {
                         canShoot = false;
+                        audioPlayer.PlayOneShot(shootAudio);
                         var bulletActual = Instantiate(bullet, shootPlace.position, Quaternion.Euler(90f, shootPlace.eulerAngles.y, 0f));
                         SniperBullet bulletScript = bulletActual.GetComponent<SniperBullet>();
                         bulletScript.InitializeBullet(bulletRotationSpeed, lookRight, life, damage, 300f / distanceX);
