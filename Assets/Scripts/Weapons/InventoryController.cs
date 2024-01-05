@@ -111,16 +111,23 @@ public class InventoryController : MonoBehaviour
 
     public void getWeapon(int weaponIndex)
     {
-        if (weaponIndex < weapons.Length && inventoryWeapons.x != weaponIndex && inventoryWeapons.y != weaponIndex)
+        if (weaponIndex < weapons.Length)
         {
-            if(inventoryWeapons.y == -1)
+            if (inventoryWeapons.x != weaponIndex && inventoryWeapons.y != weaponIndex)
             {
-                slotWeapon = false;
-                Slot2.activeToggle(true);
-                Slot1.activeToggle(false);
+                if (inventoryWeapons.y == -1)
+                {
+                    slotWeapon = false;
+                    Slot2.activeToggle(true);
+                    Slot1.activeToggle(false);
+                }
+                playObtainAudio();
+                ObtainWeapon(weaponIndex);
             }
-            playObtainAudio();
-            ObtainWeapon(weaponIndex);
+            else
+            {
+                giveAmmo(GunScripts[weaponIndex].getAmmoType());
+            }
         }
     }
 
