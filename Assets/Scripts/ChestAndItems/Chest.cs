@@ -10,6 +10,8 @@ public class Chest : MonoBehaviour
     public AudioClip openAudio;
     private AudioSource audioPlayer;
 
+    public GameObject text;
+
     void Start()
     {
         open = false;
@@ -19,8 +21,9 @@ public class Chest : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !open)
         {
+            text.SetActive(true);
             if (!open && Input.GetKey(KeyCode.T) && killsCounter?.getSouls()>0)
             {
                 open = true;
@@ -28,7 +31,16 @@ public class Chest : MonoBehaviour
                 audioPlayer.PlayOneShot(openAudio);
                 killsCounter?.consumeSoul();
                 Invoke("ShowItem", 0.7f);
+                text.SetActive(false);
             }
+        }
+    }
+
+     private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            text.SetActive(false);
         }
     }
 
