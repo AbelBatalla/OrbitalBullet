@@ -38,8 +38,12 @@ public class Projectile : MonoBehaviour
     PhysicMaterial physics_mat;
     bool hitWall = false;
 
+    public AudioClip explodeAudio;
+    private AudioSource audioPlayer;
+
     private void Start()
     {
+        audioPlayer = GetComponent<AudioSource>();
         Setup();
     }
 
@@ -70,6 +74,7 @@ public class Projectile : MonoBehaviour
 
     private void Explode()
     {
+        audioPlayer.PlayOneShot(explodeAudio);
         //Instantiate explosion
         if (explosion != null) Instantiate(explosion, transform.position, Quaternion.identity);
 

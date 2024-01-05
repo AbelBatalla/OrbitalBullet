@@ -20,8 +20,11 @@ public class FlyerRocket : MonoBehaviour
     PlayerHealth p_health;
     public float speed = 6f;
 
+    private AudioSource audioPlayer;
+
     void Start()
     {
+        audioPlayer = GetComponent<AudioSource>();
         myLight = GetComponent<Light>();
         mySphereCollider = GetComponent<SphereCollider>();       
         p_health = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
@@ -39,6 +42,7 @@ public class FlyerRocket : MonoBehaviour
     }
 
     private void Explode() {
+        audioPlayer.Play();
         if (explosion != null) Instantiate(explosion, transform.position, Quaternion.identity);
 
         Collider[] players = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);

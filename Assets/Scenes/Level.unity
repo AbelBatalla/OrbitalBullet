@@ -7648,7 +7648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1763423657681829168, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3632784685388352933, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_LocalScale.x
@@ -7704,19 +7704,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4130406965878923439, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4130406965878923439, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4667044993485377419, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4667044993485377419, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4990319675296107644, guid: 0cce73720564e0e44b4f6dce37c6098a, type: 3}
       propertyPath: m_IsActive
@@ -27170,7 +27170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &897567100
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27183,7 +27183,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d4a3833239257324ab63a7a437c10078, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
