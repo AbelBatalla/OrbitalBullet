@@ -13,6 +13,11 @@ public class KillsCounter : MonoBehaviour
         text.text = souls.ToString();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I)) addKill();
+    }
+
     public int getSouls() { return souls; }
 
     public void consumeSoul() { 
