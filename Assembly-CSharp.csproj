@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Enemies\FlyerRocket.cs" />
     <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\Enemies\CrawlerController.cs" />
+    <Compile Include="Assets\Scripts\Boss\bossDamage.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\Weapons\GrenadeRotate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Weapons\AmmoIcon.cs" />
     <Compile Include="Assets\Scripts\Player\LevelCounter.cs" />
+    <Compile Include="Assets\Scripts\UI\bossHealthBar.cs" />
+    <Compile Include="Assets\Scripts\Boss\bossController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\ChestAndItems\animatorScript.cs" />
     <Compile Include="Assets\Scripts\UI\MenuController.cs" />
+    <Compile Include="Assets\Travis Game Assets\Status Effects\Demo Scene\Scripts\StatusEffectsPreview.cs" />
     <Compile Include="Assets\Scripts\Enemies\Flyer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
@@ -106,6 +110,7 @@
     <Compile Include="Assets\Scripts\UI\Bilboard.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\Weapons\ProjectileBoss.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Traps\Spike.cs" />
@@ -118,6 +123,7 @@
     <Compile Include="Assets\Scripts\Weapons\Projectile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Traps\AimBullet.cs" />
+    <Compile Include="Assets\FadeIn.cs" />
     <Compile Include="Assets\Scripts\Enemies\SniperBullet.cs" />
     <Compile Include="Assets\UnityTechnologies\EffectExamples\Shared\Scripts\GunShoot.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
@@ -127,6 +133,7 @@
     <Compile Include="Assets\Scripts\Enemies\Sniper.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\UI\KillsCounter.cs" />
+    <Compile Include="Assets\ForceField.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\UI\enemyHealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\enemyHealthNoShield.cs" />
@@ -150,9 +157,11 @@
     <None Include="Assets\SyntyStudios\PolygonStarter\PolygonPrototype\Shaders\Prototype_Object.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\Isle of Assets\Mobile Force Field\Shaders\Force Field.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\SyntyStudios\PolygonStarter\PolygonPrototype\Shaders\Prototype_Global.shader" />
+    <None Include="Assets\Travis Game Assets\Status Effects\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />

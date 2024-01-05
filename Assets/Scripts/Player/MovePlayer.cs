@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -17,13 +19,20 @@ public class MovePlayer : MonoBehaviour
     float recoilMax, recoilAccum, recoilSpeed;
     float dashMax, dashAccum, dashSpeed;
     public bool lookRight = true;
-
+    public AudioClip dashAudio;
+    private AudioSource audioPlayer;
     int numJumps = 0;
-
+    bool dashAvailable = true;
+    public GameObject normalTrail;
+    public GameObject dashTrail;
+    bool resetDash = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        normalTrail.SetActive(true);
+        dashTrail.SetActive(false);
+        audioPlayer = GetComponent<AudioSource>();
         // Store starting direction of the player with respect to the axis of the level
         startDirection = transform.position - transform.parent.position;
         startDirection.y = 0.0f;
@@ -40,9 +49,13 @@ public class MovePlayer : MonoBehaviour
     {
         CharacterController charControl = GetComponent<CharacterController>();
         Vector3 position;
-    
+        if (!Input.GetKey(KeyCode.S)) resetDash = true;
+        if (Input.GetKey(KeyCode.S) && dashAvailable && resetDash)
+        {
+            giveDash();
+        }
         // Left-right movement
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && !recoil)
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && !recoil && !dash)
         {
             float angle;
             startDirection.x = -95.0f;
@@ -53,7 +66,6 @@ public class MovePlayer : MonoBehaviour
 
             lastPosition = transform.position;
             angle = rotationSpeed * Time.deltaTime;
-            if (recoil) position = lastPosition * 2;
             direction = position - transform.parent.position;
 
             if (Input.GetKey(KeyCode.A))
@@ -78,9 +90,6 @@ public class MovePlayer : MonoBehaviour
                     Physics.SyncTransforms();
                 }
             }
-        }
-        else if(Input.GetKey(KeyCode.S)) {
-             giveDash();
         }
         else
         {
@@ -135,9 +144,7 @@ public class MovePlayer : MonoBehaviour
                 anim.SetBool("Jump",true);
                 anim.SetBool("Grounded", false);
                 numJumps = 2;
-        }
-        else
-            speedY -= gravity * Time.deltaTime;
+        } else if (!dash) speedY -= gravity * Time.deltaTime;
     }
 
     public void giveRecoil(float recoilMaxValue, float recoilSpeedValue)
@@ -181,13 +188,21 @@ public class MovePlayer : MonoBehaviour
     }
 
     void giveDash() {
+        audioPlayer.PlayOneShot(dashAudio);
+        normalTrail.SetActive(false);
+        dashTrail.SetActive(true);
         dash = true;
         dashMax = 40.0f;
         dashSpeed = 70.0f;
         dashAccum = 0f;
         speedY = 0.0f;
         anim.SetBool("Slide",true);
+        dashAvailable = false;
+        resetDash = false;
+        Invoke("dashCooldown", 1.5f);
     }
+
+    void dashCooldown() { dashAvailable = true; }
 
     void continueDash()
     {   
@@ -197,6 +212,8 @@ public class MovePlayer : MonoBehaviour
         dashAccum += rotationAmount;
         if (dashAccum >= dashMax)
         {
+            normalTrail.SetActive(true);
+            dashTrail.SetActive(false);
             dash = false;
             anim.SetBool("Slide", false);
         }
