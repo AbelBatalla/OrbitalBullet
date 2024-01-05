@@ -165,6 +165,18 @@ public class CrawlerController : MonoBehaviour
 
             else
             {
+                // Apply gravity
+                if (charControl.isGrounded)
+                {
+                    vel.y = 0f; // Reset gravity effect when on the ground
+                }
+                else
+                {
+                    vel.y -= 20f * Time.deltaTime; // Apply gravity over time
+                }
+
+                // Move the character controller with the gravity effect
+                charControl.Move(vel * Time.deltaTime);
                 if (status != 0)
                 {
                     Vector3 position = transform.position;
@@ -207,7 +219,6 @@ public class CrawlerController : MonoBehaviour
                         anim.SetBool(Run, false);
                     }
                 }
-
             }
         }
         else
