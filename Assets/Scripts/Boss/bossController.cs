@@ -5,8 +5,10 @@ using UnityEngine;
 public class bossController : MonoBehaviour
 {
 
-    bool awake = true;
+    bool awake = false;
     private LevelCounter level_counter;
+
+    public GameObject force_field;
 
    // GunBoss gunBoss;
 
@@ -36,8 +38,17 @@ public class bossController : MonoBehaviour
 
     public Transform shootPlace;
 
-    float timeCounter; // timer to help to track the life lost in some period of time
-    float healthLost;
+    float timeCounter = 0.0f; // timer to help to track the life lost in some period of time
+    float health = 300.0f;
+    float timeShoot = 1.0f;
+    int fase_actual = 1;
+
+    bossDamage scriptBossDamage;
+
+    float counterForce_field = 0.0f;
+    float timer_force_field = 0.0f;
+
+    bool field_activate = false;
 
     public float bulletSpeed, spread, bulletLife, damage;
     //(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife, damage) (-spread, spread);
@@ -50,27 +61,88 @@ public class bossController : MonoBehaviour
     {
         level_counter = Player.GetComponent<LevelCounter>();
         anim = gameObject.GetComponent<Animator>();
+        scriptBossDamage = gameObject.GetComponentInChildren<bossDamage>();
+        Debug.Log(scriptBossDamage);
         //gunBoss = gameObject.GetComponent<GunBoss>();
         //Debug.Log(gunBoss);
         startDirection = transform.position - transform.parent.position;
         startDirection.y = 0.0f;
         startDirection.x = 95.0f;
         startDirection.Normalize();
-        
+        first_fase();
         
     }
 
+
+
+    void first_fase(){
+        bulletSpeed = 10.0f;
+        bulletLife = 3.0f;
+        damage = 35.0f;
+        spread = 0.7f;
+        rotationSpeed = 40.0f;
+        fase_actual = 1;
+        Debug.Log("First Fase");
+    }
+
+     void second_fase(){
+        bulletSpeed = 120.0f;
+        bulletLife = 15.0f;
+        damage = 50.0f;
+        spread = 90f;
+        rotationSpeed = 40.0f;
+        fase_actual = 2;
+        timeShoot = 0.5f;
+        Debug.Log("Second Fase");
+    }
+
+
+     void last_fase(){
+        bulletSpeed = 13.0f;
+        bulletLife = 15.0f;
+        damage = 65.0f;
+        spread = 0.6f;
+        rotationSpeed = 40.0f;
+        fase_actual = 3;
+        timeShoot = 0.75f;
+        Debug.Log("Last Fase");
+    }
     // Update is called once per frame
     void Update()
     {
+
+        
+
         dead = anim.GetBool("dead");
-        attacking = anim.GetBool("attack");
-        if(Input.GetKeyDown(KeyCode.K)) {
-            anim.SetTrigger("attack");
-            //gameObject.GetComponent<GunBoss>().Shoot();
-        }
+
+       
+       
+       
+
+
+
         if (awake && !dead)
         {
+            if((timeCounter > 30.0f || health <= 150.0f) && fase_actual == 1){
+                second_fase();
+            }
+            if((timeCounter > 60.0f || health <= 150.0f) && fase_actual == 2){
+                last_fase();
+            }
+
+            if(counterForce_field >= Random.Range(8, 16) && !field_activate){
+                force_field.SetActive(true);
+                counterForce_field = 0.0f;
+                field_activate = true;
+            } else if(counterForce_field >= Random.Range(6, 10) && field_activate) {
+                force_field.SetActive(false);
+                counterForce_field = 0.0f;
+                field_activate = false;
+            }
+            counterForce_field += Time.deltaTime;
+
+            timeCounter += Time.deltaTime;
+            health = scriptBossDamage.getHealth();
             CheckDistance();
             if (Mathf.Abs(distanceX) > frontierMoveOrStay && !attacking)
             {
@@ -83,6 +155,7 @@ public class bossController : MonoBehaviour
                 {
                     Debug.Log("walking");
                     if(rotated) {
+                        Debug.Log("ROTATED");
                         transform.Rotate(Vector3.up, 180f);
                         rotated = false;
                     }
@@ -90,6 +163,7 @@ public class bossController : MonoBehaviour
                 } else if(Mathf.Abs(oldDist) > Mathf.Abs(newDist)){
                     Debug.Log("walking reverse");
                     if(!rotated) {
+                        Debug.Log("NOT ROTATED");
                         transform.Rotate(Vector3.up, 180f);
                         rotated = true;
                     }
@@ -108,11 +182,11 @@ public class bossController : MonoBehaviour
                     float coeficientSpread = Random.Range(0, 1);
                     float ySpread = Random.Range(-(spread + coeficientSpread*spread), spread + coeficientSpread*spread);
                     float coeficient = Random.Range(0, 1);
-                    Projectile Projectile = bulletNew.GetComponent<Projectile>();
+                    ProjectileBoss Projectile = bulletNew.GetComponent<ProjectileBoss>();
 
                     float bSpeedRand = Random.Range(bulletSpeed - coeficient*bulletSpeed, bulletSpeed + coeficient*bulletSpeed);
-                    if(Projectile != null) Projectile.InitializeBullet(bSpeedRand, true, ySpread, bulletLife, damage);
-                    Invoke("resetShot", 1f);
+                    if(Projectile != null) Projectile.InitializeBullet(bSpeedRand, !rotated, ySpread, bulletLife, damage);
+                    Invoke("resetShot", timeShoot);
                 }
                 anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);
             }

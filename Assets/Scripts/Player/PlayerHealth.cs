@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip hitAudio;
     private AudioSource audioPlayer;
     bool dead = false;
+    bool poisoned = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +51,21 @@ public class PlayerHealth : MonoBehaviour
         if(playerObject.transform.position.y < -10f) TakeDamage(100f);
     }
 
+    public void TakeDamageContinuous(){
+        if(!poisoned){
+             health -= 10.0f;
+             poisoned = true;
+             StartCoroutine("damageForceField");
+        }
+    }
+
+    IEnumerator damageForceField() {
+        if(poisoned){
+            health -= 3.0f;
+        }
+        yield return new WaitForSeconds(2);
+        poisoned = false;
+    }
     public void TakeDamage(float damage)
     {
         if (anim.GetBool("Slide") == false && !god_mode)

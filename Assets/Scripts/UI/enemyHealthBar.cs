@@ -12,6 +12,7 @@ public class enemyHealthBar : MonoBehaviour
     public Slider shieldSlider;
     public Slider easeShieldSlider;
     public Enemy playerHealth;
+
     private float lerpSpeed = 0.03f;
     private float oldEase;
     private float oldEaseShield;
