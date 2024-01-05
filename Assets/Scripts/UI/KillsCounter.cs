@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 public class KillsCounter : MonoBehaviour
 {
-    private int kills = 0;
     private int souls = 0;
     public TextMeshProUGUI text;
     void Start()
@@ -26,7 +25,6 @@ public class KillsCounter : MonoBehaviour
     }
 
     public void addKill() { 
-        ++kills;
         ++souls;
         text.text = souls.ToString();
     }
