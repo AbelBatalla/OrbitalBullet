@@ -37,9 +37,7 @@ public class WeightedRandomList<T>
         {
             totalWeight += p.weight;
         }
-        Debug.Log("TotalWeight: " + totalWeight);
         float value = Random.value * totalWeight;
-        Debug.Log("RandomValue: " + value);
         float sumWeight = 0;
 
         foreach (Pair p in list)
@@ -48,7 +46,6 @@ public class WeightedRandomList<T>
 
             if (sumWeight >= value)
             {
-                Debug.Log("Sumweight: " + sumWeight);
                 return p.item;
             }
         }

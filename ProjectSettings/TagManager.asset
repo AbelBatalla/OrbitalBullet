@@ -9,6 +9,7 @@ TagManager:
   - Level
   - Map
   - mesh_player
+  - KillsCanvas
   layers:
   - Default
   - TransparentFX

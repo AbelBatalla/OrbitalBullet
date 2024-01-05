@@ -10,10 +10,13 @@ public class Chest : MonoBehaviour
 
     public animatorScript animator;
 
+    public KillsCounter killsCounter;
+
     void Start()
     {
         open = false;
         active = true;
+        killsCounter = GameObject.FindWithTag("KillsCanvas").GetComponent<KillsCounter>();
     }
 
     void OnTriggerStay(Collider other)
@@ -22,7 +25,7 @@ public class Chest : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                if (Input.GetKey(KeyCode.T))
+                if (Input.GetKey(KeyCode.T) && killsCounter?.getSouls()>0)
                 {
                     if (open)
                     {
@@ -31,6 +34,7 @@ public class Chest : MonoBehaviour
                     else
                     {
                         if (animator != null) animator.activa();
+                        killsCounter?.consumeSoul();
                         Invoke("ShowItem", 0.7f);
                     }
                     active = false;

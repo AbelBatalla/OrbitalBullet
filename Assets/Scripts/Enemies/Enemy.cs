@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private Sniper sniperScript;
     private Flyer flyerScript;
     private CrawlerController crawlerScript;
+    public KillsCounter killsCounter;
     void Start()
     {
         health = maxHealth;
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
         if (deathAnim == 1) crawlerScript = GetComponentInParent<CrawlerController>();
         else if (deathAnim == 2) sniperScript = GetComponentInParent<Sniper>();
         else if (deathAnim == 3) flyerScript = GetComponentInParent<Flyer>();
+        killsCounter = GameObject.FindWithTag("KillsCanvas").GetComponent<KillsCounter>();
     }
 
     // Update is called once per frame
@@ -29,10 +31,11 @@ public class Enemy : MonoBehaviour
         {
             takeDamage(10f);
         }
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
+            killsCounter?.addKill();
             if (deathAnim == 0) Destroy(transform.parent.gameObject);
-            else if (!dead)
+            else
             {
                 dead = true;
                 if (deathAnim == 1)
