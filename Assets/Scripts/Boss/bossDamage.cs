@@ -12,13 +12,15 @@ public class bossDamage : MonoBehaviour
     private bool dead = false;
 
     public GameObject EndPannel;
-
+    bossController bossScript;
     Animator anim;
     void Start()
     {
         health = maxHealth;
         shield = maxShield;
         anim = gameObject.GetComponentInParent<Animator>();
+        bossScript = gameObject.GetComponentInParent<bossController>();
+
     }
 
     // Update is called once per frame
@@ -46,10 +48,14 @@ public class bossDamage : MonoBehaviour
         SceneManager.LoadScene("Credits");
     }
     public void takeDamage(float damage) {
-        shield -= damage;
-        if (shield < 0) {
-            health += shield;
-            shield = 0;
+        if (bossScript.getShieldState())
+        {
+            shield -= damage;
+            if (shield < 0)
+            {
+                health += shield;
+                shield = 0;
+            }
         }
     }
 
