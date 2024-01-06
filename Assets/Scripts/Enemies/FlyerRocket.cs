@@ -49,6 +49,7 @@ public class FlyerRocket : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             p_health.TakeDamage(explosionDamage);
+            break;
         }
         StopRender();
     }

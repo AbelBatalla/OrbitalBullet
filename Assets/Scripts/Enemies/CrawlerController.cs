@@ -10,7 +10,6 @@ public class CrawlerController : MonoBehaviour
     float distanceX;
     float distanceY;
     PlayerHealth playerHealth;
-    public int level = 0;
     public float rotationSpeed = 15f;
     int status = 0; //0 idle, -1 move left, 1 move right;
     public float damage = 10f;
