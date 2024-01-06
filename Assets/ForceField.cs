@@ -6,7 +6,7 @@ public class ForceField : MonoBehaviour
 {
     // Start is called before the first frame update
     bool poison;
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerStay(Collider other) {
         if(other.CompareTag("Player")) {
             other.GetComponent<PlayerHealth>().TakeDamageContinuous();
         }

@@ -38,9 +38,11 @@ public class bossController : MonoBehaviour
 
     public Transform shootPlace;
 
+    public GameObject faceGun;
+
     float timeCounter = 0.0f; // timer to help to track the life lost in some period of time
     float health = 300.0f;
-    float timeShoot = 1.0f;
+    float timeShoot = 2.9f;
     int fase_actual = 1;
 
     bossDamage scriptBossDamage;
@@ -70,71 +72,55 @@ public class bossController : MonoBehaviour
         startDirection.x = 95.0f;
         startDirection.Normalize();
         first_fase();
-        
     }
 
 
 
     void first_fase(){
         bulletSpeed = 10.0f;
-        bulletLife = 3.0f;
-        damage = 35.0f;
+        bulletLife = 6.0f;
+        damage = 20.0f;
         spread = 0.7f;
         rotationSpeed = 40.0f;
         fase_actual = 1;
         Debug.Log("First Fase");
     }
+     
+    void shooter(){
+        canShoot = false;
+        attacking = true;    
+        var bulletNew = Instantiate(bullet, shootPlace.position, Quaternion.Euler(90f, shootPlace.eulerAngles.y, 0f));
+        float coeficientSpread = Random.Range(0, 1);
+        float ySpread = Random.Range(-(spread + coeficientSpread*spread), spread + coeficientSpread*spread);
+        float coeficient = Random.Range(0, 1);
+        ProjectileBoss Projectile = bulletNew.GetComponent<ProjectileBoss>();
 
-     void second_fase(){
-        bulletSpeed = 120.0f;
-        bulletLife = 15.0f;
-        damage = 50.0f;
-        spread = 90f;
-        rotationSpeed = 40.0f;
-        fase_actual = 2;
-        timeShoot = 0.5f;
-        Debug.Log("Second Fase");
+        float bSpeedRand = Random.Range(bulletSpeed - coeficient*bulletSpeed, bulletSpeed + coeficient*bulletSpeed);
+        if(Projectile != null) Projectile.InitializeBullet(bSpeedRand, !rotated, ySpread, bulletLife, damage);
+        Invoke("resetShot", 3.3f);
     }
 
-
-     void last_fase(){
-        bulletSpeed = 13.0f;
-        bulletLife = 15.0f;
-        damage = 65.0f;
-        spread = 0.6f;
-        rotationSpeed = 40.0f;
-        fase_actual = 3;
-        timeShoot = 0.75f;
-        Debug.Log("Last Fase");
-    }
     // Update is called once per frame
     void Update()
     {
-
-        
-
         dead = anim.GetBool("dead");
-
-       
-       
-       
-
-
-
         if (awake && !dead)
         {
-            if((timeCounter > 30.0f || health <= 150.0f) && fase_actual == 1){
-                second_fase();
-            }
-            if((timeCounter > 60.0f || health <= 150.0f) && fase_actual == 2){
-                last_fase();
+            if((timeCounter > 40.0f || health <= 150.0f) && fase_actual == 1){
+                faceGun.SetActive(true);
             }
 
-            if(counterForce_field >= Random.Range(8, 16) && !field_activate){
+            if(field_activate){
+                faceGun.SetActive(true);
+            } else {
+                faceGun.SetActive(false);
+            }
+
+            if(counterForce_field >= Random.Range(8, 18) && !field_activate){
                 force_field.SetActive(true);
                 counterForce_field = 0.0f;
                 field_activate = true;
-            } else if(counterForce_field >= Random.Range(6, 10) && field_activate) {
+            } else if(counterForce_field >= Random.Range(6, 16) && field_activate) {
                 force_field.SetActive(false);
                 counterForce_field = 0.0f;
                 field_activate = false;
@@ -173,22 +159,12 @@ public class bossController : MonoBehaviour
             }
             else
             {
-                if (canShoot)
+                if (canShoot && !field_activate)
                 {
-                    canShoot = false;
                     anim.SetTrigger("attack");
-                    attacking = true;    
-                    var bulletNew = Instantiate(bullet, shootPlace.position, Quaternion.Euler(90f, shootPlace.eulerAngles.y, 0f));
-                    float coeficientSpread = Random.Range(0, 1);
-                    float ySpread = Random.Range(-(spread + coeficientSpread*spread), spread + coeficientSpread*spread);
-                    float coeficient = Random.Range(0, 1);
-                    ProjectileBoss Projectile = bulletNew.GetComponent<ProjectileBoss>();
-
-                    float bSpeedRand = Random.Range(bulletSpeed - coeficient*bulletSpeed, bulletSpeed + coeficient*bulletSpeed);
-                    if(Projectile != null) Projectile.InitializeBullet(bSpeedRand, !rotated, ySpread, bulletLife, damage);
-                    Invoke("resetShot", timeShoot);
+                    Invoke("shooter", 1.7f);
                 }
-                anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);
+                else {anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);}
             }
 
 
