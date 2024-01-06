@@ -10,6 +10,7 @@ TagManager:
   - Map
   - mesh_player
   - KillsCanvas
+  - text_object
   layers:
   - Default
   - TransparentFX
