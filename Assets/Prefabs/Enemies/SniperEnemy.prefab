@@ -51,10 +51,9 @@ MonoBehaviour:
   shootPlace: {fileID: 5616117010973204906}
   Player: {fileID: 0}
   detectionRadius: 70
-  level: 0
   rotationSpeed: 10
   bulletRotationSpeed: 100
-  life: 1.5
+  life: 2.5
   damage: 20
   deathAudio: {fileID: 8300000, guid: e932d045b85aee849a3ea9730a1cc7b0, type: 3}
   hitAudio: {fileID: 8300000, guid: 5197912a3882381469dcd5229269c601, type: 3}

@@ -8,12 +8,8 @@ public class Flyer : MonoBehaviour
     public GameObject Player;
     public float detectionRadius = 30f;
     bool awake = false;
-    float distanceY;
     float distanceX;
-    float levelDifference = 5f;
     float frontierMoveOrStay = 10f;
-    LevelCounter playerScript;
-    public int level = 0;
     public float rotationSpeed = 15f;
     bool canShoot = true;
     private bool alive = true;
@@ -24,11 +20,6 @@ public class Flyer : MonoBehaviour
     {
         if (Player == null) Player = GameObject.FindGameObjectWithTag("Player");
         if (Player == null) Debug.Log("playerNotFound");
-        else
-        {
-            playerScript = Player.GetComponent<LevelCounter>();
-            if (playerScript == null) Debug.Log("SCRIPT NOT FOUND");
-        }
         audioPlayer = GetComponent<AudioSource>();
         CheckDistance();
 
@@ -82,7 +73,6 @@ public class Flyer : MonoBehaviour
         Vector3 playerPositionXZ = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
 
         distanceX = Vector3.Distance(enemyPositionXZ, playerPositionXZ);
-        distanceY = Mathf.Abs(transform.position.y - Player.transform.position.y);
     }
 
     private void resetShot() { canShoot = true; }

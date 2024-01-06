@@ -8,7 +8,7 @@ public class SniperBullet : MonoBehaviour
 
     Vector3 rotationAxis = Vector3.up;
     private float rotationSpeed = 120f;
-    private float life = 1.5f;
+    private float life = 2.5f;
     bool stop = false;
     private float damage = 20f;
     private float height = 2f;
@@ -36,7 +36,10 @@ public class SniperBullet : MonoBehaviour
             else Debug.Log("Null Component");
             StopRender();
         }
-        
+        if (!stop && other.gameObject.CompareTag("Map"))
+        {
+            StopRender();
+        }
     }
 
     public void InitializeBullet(float rotationSpeedValue, bool rotateRightValue, float lifeValue, float damageValue, float heightValue)
