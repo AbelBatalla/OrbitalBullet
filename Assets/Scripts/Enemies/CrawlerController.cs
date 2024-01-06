@@ -9,15 +9,11 @@ public class CrawlerController : MonoBehaviour
     bool awake = true;
     float distanceX;
     float distanceY;
-    float levelDifference = 5f;
-    LevelCounter playerScript;
     PlayerHealth playerHealth;
     public int level = 0;
     public float rotationSpeed = 15f;
     int status = 0; //0 idle, -1 move left, 1 move right;
     public float damage = 10f;
-    bool faceRight;
-    private float tolerance = 0.1f;
     public Transform CrawlerBody;
     public Animator anim;
     int IdleOne;
@@ -66,10 +62,8 @@ public class CrawlerController : MonoBehaviour
         if (Player == null) Debug.Log("playerNotFound");
         else
         {
-            playerScript = Player.GetComponent<LevelCounter>();
-            if (playerScript == null) Debug.Log("LEVEL SCRIPT NOT FOUND");
             playerHealth = Player.GetComponent<PlayerHealth>();
-            if (playerScript == null) Debug.Log("HEALTH SCRIPT NOT FOUND");
+            if (playerHealth == null) Debug.Log("HEALTH SCRIPT NOT FOUND");
         }
          vel = new Vector3(0, 0, 0);
         randomizeIdle();

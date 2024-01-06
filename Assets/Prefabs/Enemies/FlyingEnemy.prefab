@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3632784685388352933}
   - component: {fileID: 1154050257476544621}
   - component: {fileID: -7135159237987439963}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: FlyingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6.666666, y: 6.666666, z: 6.666666}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2503960148143041194}
@@ -51,7 +51,6 @@ MonoBehaviour:
   shootPlace: {fileID: 5616117010973204906}
   Player: {fileID: 0}
   detectionRadius: 25
-  level: 0
   rotationSpeed: 30
   deathAudio: {fileID: 8300000, guid: e932d045b85aee849a3ea9730a1cc7b0, type: 3}
   hitAudio: {fileID: 8300000, guid: 5197912a3882381469dcd5229269c601, type: 3}
@@ -67,7 +66,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

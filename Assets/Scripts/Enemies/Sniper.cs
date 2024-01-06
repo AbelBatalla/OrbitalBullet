@@ -11,8 +11,6 @@ public class Sniper : MonoBehaviour
     float distanceX;
     float frontierMoveOrStay = 50f;
     float frontierEscape = 30f;
-    LevelCounter playerScript;
-    public int level = 0;
     public float rotationSpeed = 15f;
     bool canShoot = true;
     public float bulletRotationSpeed = 120f;
@@ -29,11 +27,6 @@ public class Sniper : MonoBehaviour
     {
         if (Player == null) Player = GameObject.FindGameObjectWithTag("Player");
         if (Player == null) Debug.Log("playerNotFound");
-        else
-        {
-            playerScript = Player.GetComponent<LevelCounter>();
-            if (playerScript == null) Debug.Log("SCRIPT NOT FOUND");
-        }
         audioPlayer = GetComponent<AudioSource>();
         CheckDistance();
 
