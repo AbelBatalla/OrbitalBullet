@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class bossController : MonoBehaviour
 {
-
-    bool awake = false;
-    private LevelCounter level_counter;
-
     public GameObject force_field;
 
    // GunBoss gunBoss;
@@ -33,6 +29,8 @@ public class bossController : MonoBehaviour
     public GameObject bullet;
 
     bool canShoot = true;
+
+    bool barrageActive = false;
 
     bool dead = false;
 
@@ -61,13 +59,12 @@ public class bossController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        level_counter = Player.GetComponent<LevelCounter>();
         anim = gameObject.GetComponent<Animator>();
         scriptBossDamage = gameObject.GetComponentInChildren<bossDamage>();
         Debug.Log(scriptBossDamage);
         //gunBoss = gameObject.GetComponent<GunBoss>();
         //Debug.Log(gunBoss);
-        startDirection = transform.position - transform.parent.position;
+        startDirection = transform.position;
         startDirection.y = 0.0f;
         startDirection.x = 95.0f;
         startDirection.Normalize();
@@ -87,24 +84,22 @@ public class bossController : MonoBehaviour
     }
      
     void shooter(){
-        canShoot = false;
-        attacking = true;    
+        attacking = true;
         var bulletNew = Instantiate(bullet, shootPlace.position, Quaternion.Euler(90f, shootPlace.eulerAngles.y, 0f));
         float coeficientSpread = Random.Range(0, 1);
         float ySpread = Random.Range(-(spread + coeficientSpread*spread), spread + coeficientSpread*spread);
-        float coeficient = Random.Range(0, 1);
         ProjectileBoss Projectile = bulletNew.GetComponent<ProjectileBoss>();
 
-        float bSpeedRand = Random.Range(bulletSpeed - coeficient*bulletSpeed, bulletSpeed + coeficient*bulletSpeed);
+        float bSpeedRand = bulletSpeed + Random.Range(0, bulletSpeed * 2f);
         if(Projectile != null) Projectile.InitializeBullet(bSpeedRand, !rotated, ySpread, bulletLife, damage);
-        Invoke("resetShot", 3.3f);
+        if(barrageActive) Invoke("shooter", 0.1f);
     }
 
     // Update is called once per frame
     void Update()
     {
         dead = anim.GetBool("dead");
-        if (awake && !dead)
+        if (!dead)
         {
             if((timeCounter > 40.0f || health <= 150.0f) && fase_actual == 1){
                 faceGun.SetActive(true);
@@ -161,8 +156,15 @@ public class bossController : MonoBehaviour
             {
                 if (canShoot && !field_activate)
                 {
+                    canShoot = false;
+                    barrageActive = true;
                     anim.SetTrigger("attack");
                     Invoke("shooter", 1.7f);
+                    Invoke("endShooter", 2.4f);
+                    Invoke("resetShot", 5f);
+                    //Començar barrage després de 1.7s
+                    //Acabar barraje després de 2.4s
+                    //Reiniciar després de 5s;
                 }
                 else {anim.SetFloat("Blend", 0.0f, 0.1f, Time.deltaTime);}
             }
@@ -170,7 +172,7 @@ public class bossController : MonoBehaviour
 
             // Correct orientation of player
             // Compute current direction
-            Vector3 currentDirection = transform.position - transform.parent.position;
+            Vector3 currentDirection = transform.position;
             currentDirection.y = 0.0f;
             currentDirection.Normalize();
             // Change orientation of player accordingly
@@ -182,17 +184,6 @@ public class bossController : MonoBehaviour
             else
                 orientation = Quaternion.FromToRotation(startDirection, currentDirection);
             transform.rotation = orientation;
-        }
-        else
-        {
-            if (level_counter.getLevel() == 5)
-            {
-                CheckDistance();
-                if (distanceX <= detectionRadius)
-                {
-                    awake = true;
-                }
-            }
         }
         
     }
@@ -207,10 +198,19 @@ private void CheckDistance()
 }
 
 
-private void resetShot() { 
-    canShoot = true; 
-    attacking = false;
-}
+    private void resetShot() { 
+        canShoot = true; 
+        attacking = false;
+    }
 
-    
+    private void endShooter()
+    {
+        barrageActive = false;
+    }
+
+    public bool getShieldState()
+    {
+        return !field_activate;
+    }
+
 }

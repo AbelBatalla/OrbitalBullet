@@ -38,8 +38,12 @@ public class ProjectileBoss : MonoBehaviour
     PhysicMaterial physics_mat;
     bool hitWall = false;
 
+    public AudioClip explodeAudio;
+    private AudioSource audioPlayer;
+
     private void Start()
     {
+        audioPlayer = GetComponent<AudioSource>();
         Setup();
     }
 
@@ -70,6 +74,8 @@ public class ProjectileBoss : MonoBehaviour
 
     private void Explode()
     {
+        audioPlayer.PlayOneShot(explodeAudio);
+
         //Instantiate explosion
         if (explosion != null) Instantiate(explosion, transform.position, Quaternion.identity);
 
@@ -78,6 +84,7 @@ public class ProjectileBoss : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             p_health.TakeDamage(explosionDamage);
+            break;
         }
         StopRender();
     }
@@ -110,13 +117,14 @@ public class ProjectileBoss : MonoBehaviour
         //Count up collisions
         collisions++;
 
-        if (collision.collider.CompareTag("Map")) Debug.Log("Collision");
+        if (collision.collider.CompareTag("Map"))
+        {
             foreach (ContactPoint contact in collision.contacts)
             {
                 // Check if the normal of the contact point is approximately horizontal
                 if (Mathf.Abs(contact.normal.y) < tolerance) // 'tolerance' is a small value like 0.1
                 {
-                
+
                     // Get current velocity
                     Vector3 currentVelocity = myRigidbody.velocity;
 
@@ -129,7 +137,7 @@ public class ProjectileBoss : MonoBehaviour
                     rotationSpeed = -rotationSpeed / 1.5f;
                 }
             }
-
+        }
         //Explode if bullet hits an enemy directly and explodeOnTouch is activadted
         if (collision.collider.CompareTag("Player") && explodeOnTouch)
         {
