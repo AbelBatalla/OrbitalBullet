@@ -1114,6 +1114,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="AssetUsageDetector.Editor.csproj">
+      <Project>{46C7A69F-8D2F-1E3C-A5C1-7D728A7A2664}</Project>
+      <Name>AssetUsageDetector.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
