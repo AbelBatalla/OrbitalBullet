@@ -323,16 +323,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 2882927188474325053}
   bulletPrefab: {fileID: 6925440512669344103, guid: c81a747cd395cc845b67ca05a91d42b1, type: 3}
-  timeBetweenShooting: 0.1
+  timeBetweenShooting: 0.2
   timeBetweenShots: 0
   spread: 3
-  bulletLife: 1.5
+  bulletLife: 1
   bulletSpeed: 180
   damage: 8
-  magazineSize: 100
   bulletsPerTap: 1
   allowButtonHold: 1
   allowInvoke: 1
+  ammoType: 0
   recoilLength: 0
   recoilSpeed: 0
   player: {fileID: 0}

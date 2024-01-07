@@ -73,7 +73,7 @@ public class Gun : MonoBehaviour
         readyToShoot = false;
         bulletsLeft--;
         bulletsShot++;
-        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.Euler(90f, bulletSpawnPoint.eulerAngles.y, 0f));
+        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         float ySpread = Random.Range(-spread, spread);
         BulletBehaviour BulletBehaviour = bullet.GetComponent<BulletBehaviour>();
         if (BulletBehaviour != null) BulletBehaviour.InitializeBullet(bulletSpeed, MovePlayer.lookRight, ySpread, bulletLife, damage);

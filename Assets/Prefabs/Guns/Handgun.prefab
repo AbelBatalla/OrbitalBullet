@@ -210,13 +210,13 @@ MonoBehaviour:
   timeBetweenShooting: 0
   timeBetweenShots: 0
   spread: 0.5
-  bulletLife: 1.5
+  bulletLife: 1
   bulletSpeed: 180
   damage: 20
-  magazineSize: 16
   bulletsPerTap: 1
   allowButtonHold: 0
   allowInvoke: 1
+  ammoType: 0
   recoilLength: 2
   recoilSpeed: 80
   player: {fileID: 0}

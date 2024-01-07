@@ -30,6 +30,7 @@ public class MovePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("STARTING!");
         normalTrail.SetActive(true);
         dashTrail.SetActive(false);
         audioPlayer = GetComponent<AudioSource>();
