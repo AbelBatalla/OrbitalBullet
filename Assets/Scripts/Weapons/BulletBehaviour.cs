@@ -68,7 +68,6 @@ public class BulletBehaviour : MonoBehaviour
         mySphereCollider = GetComponent<SphereCollider>();
         myRigidbody = GetComponent<Rigidbody>();
         myRigidbody.velocity = Vector3.up * ySpread;
-        // Get the current rotation
     }
 
     private void StopRender()

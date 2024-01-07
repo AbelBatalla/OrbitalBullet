@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class SniperBullet : MonoBehaviour
@@ -17,13 +18,21 @@ public class SniperBullet : MonoBehaviour
     private Light myLight;
     private SphereCollider mySphereCollider;
     private Rigidbody myRigidbody;
+    Vector3 point = Vector3.zero;
+
 
     void Update()
     {
         if (!stop)
         {
-            transform.RotateAround(Vector3.zero, rotationAxis, (rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime);
-            transform.Translate(Vector3.forward * height * Time.deltaTime);
+            Quaternion rotation = Quaternion.AngleAxis((rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime, rotationAxis);
+
+            // Apply the rotation
+            myRigidbody.MoveRotation(rotation);
+
+            // Manually move the Rigidbody to maintain distance from the point
+            Vector3 offset = myRigidbody.position - point;
+            myRigidbody.MovePosition(point + (rotation * offset));
         }
     }
 
@@ -54,6 +63,7 @@ public class SniperBullet : MonoBehaviour
         myLight = GetComponent<Light>();
         mySphereCollider = GetComponent<SphereCollider>();
         myRigidbody = GetComponent<Rigidbody>();
+        myRigidbody.velocity = Vector3.up * -heightValue;
     }
 
     private void StopRender()

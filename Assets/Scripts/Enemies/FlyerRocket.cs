@@ -9,6 +9,7 @@ public class FlyerRocket : MonoBehaviour
     public Renderer myRenderer;
     private Light myLight;
     private SphereCollider mySphereCollider;
+    private Rigidbody myRigidbody;
 
     public GameObject explosion;
     public LayerMask whatIsEnemies;
@@ -26,7 +27,8 @@ public class FlyerRocket : MonoBehaviour
     {
         audioPlayer = GetComponent<AudioSource>();
         myLight = GetComponent<Light>();
-        mySphereCollider = GetComponent<SphereCollider>();       
+        mySphereCollider = GetComponent<SphereCollider>();
+        myRigidbody = GetComponent<Rigidbody>();
         p_health = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
 
@@ -35,8 +37,11 @@ public class FlyerRocket : MonoBehaviour
     {
         if (!stop)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            life -= Time.deltaTime;
+            // Calculate the new position
+            Vector3 newPosition = myRigidbody.position + transform.forward * Time.fixedDeltaTime * speed;
+
+            // Move the Rigidbody to the new position
+            myRigidbody.MovePosition(newPosition); life -= Time.deltaTime;
             if (life <= 0) Explode();
         }
     }
