@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
     public GameObject bulletCollision;
 
+    Vector3 point = Vector3.zero;
     Vector3 rotationAxis = Vector3.up; // Define the axis (up, right, forward, etc.)
     float rotationSpeed;// = 180f; // Speed of rotation
     float life = 1.5f;
@@ -22,8 +24,14 @@ public class BulletBehaviour : MonoBehaviour
     {
         if (!stop)
         {
-            transform.RotateAround(Vector3.zero, rotationAxis, (rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime);
-            transform.Translate(Vector3.forward * ySpread * Time.deltaTime);
+            Quaternion rotation = Quaternion.AngleAxis((rotateRight ? -rotationSpeed : rotationSpeed) * Time.deltaTime, rotationAxis);
+
+            // Apply the rotation
+            myRigidbody.MoveRotation(rotation);
+
+            // Manually move the Rigidbody to maintain distance from the point
+            Vector3 offset = myRigidbody.position - point;
+            myRigidbody.MovePosition(point + (rotation * offset));
         }
     }
 
@@ -32,7 +40,7 @@ public class BulletBehaviour : MonoBehaviour
 
         if (collision.collider.CompareTag("Map"))
         {
-            Instantiate(bulletCollision, collision.contacts[0].point, Quaternion.Euler(0, 180, 0));
+            Instantiate(bulletCollision, collision.contacts[0].point, Quaternion.Euler(0, 0, 180));
         }
         else if (collision.collider.CompareTag("Enemy"))
         {
@@ -59,6 +67,8 @@ public class BulletBehaviour : MonoBehaviour
         myLight = GetComponent<Light>();
         mySphereCollider = GetComponent<SphereCollider>();
         myRigidbody = GetComponent<Rigidbody>();
+        myRigidbody.velocity = Vector3.up * ySpread;
+        // Get the current rotation
     }
 
     private void StopRender()

@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32df4c5a359ad1d47b2eab89f27114bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRenderer: {fileID: 0}
+  myRenderer: {fileID: 4734402576702921046}
   explosion: {fileID: 1000011797152326, guid: e3cb0938bb28f7d44b55997cd77ee9ca, type: 3}
   whatIsEnemies:
     serializedVersion: 2
