@@ -96,11 +96,13 @@ MonoBehaviour:
     - item: {fileID: 8374210727577250327, guid: daabc1dcb8dd4de47835ab7af7fe773c, type: 3}
       weight: 2
     - item: {fileID: 8374210727577250327, guid: 9c9470f2167c19d4eba06b71553093c3, type: 3}
-      weight: 2
+      weight: 3
   itemHolder: {fileID: 4501866326342413694}
   animator: {fileID: 3250866924255167394}
   killsCounter: {fileID: 0}
   openAudio: {fileID: 8300000, guid: caf65b56c744b194f8fd8d445d0a0804, type: 3}
+  text: {fileID: 0}
+  textLoot: {fileID: 0}
 --- !u!135 &8988318277230844965
 SphereCollider:
   m_ObjectHideFlags: 0
